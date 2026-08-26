@@ -135,6 +135,16 @@ a { color: inherit; }
     linear-gradient(to bottom, color-mix(in srgb, var(--noche) 88%, transparent) 0%, transparent 30%, transparent 55%, var(--noche) 100%);
 }
 
+/* Con fotografía: se cierra el degradado para que el crema lea encima,
+   y la luz de vela baja a un acento cálido en lugar de ser el fondo. */
+.hero.has-photo .hero-media::after {
+  background:
+    radial-gradient(105% 78% at 50% 44%, transparent 0%, color-mix(in srgb, var(--noche) 55%, transparent) 46%, color-mix(in srgb, var(--noche) 88%, transparent) 82%, var(--noche) 100%),
+    linear-gradient(to bottom, color-mix(in srgb, var(--noche) 90%, transparent) 0%, color-mix(in srgb, var(--noche) 30%, transparent) 26%, color-mix(in srgb, var(--noche) 45%, transparent) 58%, var(--noche) 100%);
+}
+.hero.has-photo .hero-glow { opacity: 0.45; }
+.hero.has-photo .hero-grain { opacity: 0.10; }
+
 /* Candlelight. Two warm pools, breathing slightly out of sync. */
 .hero-glow { position: absolute; inset: 0; z-index: -2; }
 .hero-glow::before, .hero-glow::after {

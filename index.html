@@ -67,14 +67,18 @@
 
 <!-- ============ HERO ============ -->
 <!--
-  Sin foto por decisión: no hay fotografía real del interior de Amara todavía.
-  Para activarla: pon el archivo en assets/img/hero.jpg y quita el atributo
-  hidden del <div class="hero-media"> de abajo. El resto se acomoda solo.
+  Fotografía real del interior de Amara (la barra), con grade cinematográfico
+  para amarrar con la paleta del sitio. No es imagen generada.
+  Para cambiarla: reemplaza assets/img/hero.jpg y assets/img/hero-1280.jpg.
 -->
-<section class="hero" id="top">
+<section class="hero has-photo" id="top">
 
-  <div class="hero-media" hidden>
-    <img src="assets/img/hero.jpg" alt="" fetchpriority="high">
+  <div class="hero-media">
+    <img src="assets/img/hero.jpg"
+         srcset="assets/img/hero-1280.jpg 1280w, assets/img/hero.jpg 2400w"
+         sizes="100vw"
+         alt="La barra de Amara: muro de botellas, cubierta de granito y banquillos de terciopelo azul"
+         fetchpriority="high">
   </div>
 
   <!-- luz de vela -->

@@ -35,15 +35,15 @@ Si Amara quiere `menu.amaramexicancuisine.com`:
 
 **Este sitio no usa imágenes generadas por IA.** Solo fotografía real de Amara.
 
-Mientras no haya fotos, el sitio funciona sin ellas — el diseño está hecho para
-sostenerse con tipografía. La portada usa el nudo dorado del menú impreso de
-Amara, animado. Es el único elemento visual y es auténtico de la marca.
+La portada usa una fotografía real de la barra de Amara, con grade cinematográfico
+aplicado (balance de blancos cálido, negros profundos, viñeta y grano) para que
+amarre con la paleta del sitio. No es una imagen generada: es la barra tal cual,
+solo con corrección de color — como cualquier retoque comercial.
 
-### Activar la foto de portada
+### Cambiar la foto de portada
 
-1. Guarda la foto del interior en `assets/img/hero.jpg`
-2. En `index.html`, quita el atributo `hidden` de `<div class="hero-media" hidden>`
-3. `git add . && git commit -m "Foto del interior" && git push`
+1. Reemplaza `assets/img/hero.jpg` (2400px de ancho) y `assets/img/hero-1280.jpg`
+2. `git add . && git commit -m "Nueva foto de portada" && git push`
 
 El nudo y la tipografía se quedan encima con degradado. Funciona mejor con una
 foto **oscura, horizontal, sin gente mirando a cámara** — un plano del comedor o
@@ -56,7 +56,6 @@ la barra con luz cálida.
 
 | Nombre de archivo | Dónde aparecería |
 |---|---|
-| `hero.jpg` | Portada |
 | `brunch.jpg` | Sección Brunch |
 | `molcajete.jpg` | Especialidades de la Casa |
 | `pulpo.jpg` | Grupo Del Mar |
