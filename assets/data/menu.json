@@ -964,5 +964,59 @@
         }
       ]
     }
+  ],
+  "featured": [
+    {
+      "img": "trompito",
+      "itemId": "cena-tacos-4",
+      "price": 25,
+      "name": {
+        "es": "Trompito Pastor",
+        "en": "Trompito Pastor"
+      },
+      "note": {
+        "es": "Cerdo al achiote, piña asada y cuatro salsas de la casa.",
+        "en": "Achiote pork, grilled pineapple, four house salsas."
+      }
+    },
+    {
+      "img": "pina-mariscos",
+      "itemId": "casa-mar-0",
+      "price": 33,
+      "name": {
+        "es": "Piña de Mariscos Gratinada",
+        "en": "Piña de Mariscos Gratinada"
+      },
+      "note": {
+        "es": "Camarón, pulpo y tocino gratinados dentro de media piña asada.",
+        "en": "Shrimp, octopus and bacon gratinéed inside half a roasted pineapple."
+      }
+    },
+    {
+      "img": "chilaquiles",
+      "itemId": "brunch-principales-7",
+      "price": 17,
+      "name": {
+        "es": "Chilaquiles Rojos",
+        "en": "Chilaquiles Rojos"
+      },
+      "note": {
+        "es": "Salsa roja, dos huevos, crema, queso fresco y aguacate.",
+        "en": "Red salsa, two eggs, crema, queso fresco and avocado."
+      }
+    },
+    {
+      "img": "tacos-camaron",
+      "itemId": "cena-tacos-2",
+      "price": 25,
+      "name": {
+        "es": "Tacos de Camarón",
+        "en": "Shrimp Tacos"
+      },
+      "note": {
+        "es": "Tres tacos con col morada, aioli de chipotle y salsa de mango.",
+        "en": "Three tacos with red cabbage, chipotle aioli and mango sauce."
+      }
+    }
   ]
 }

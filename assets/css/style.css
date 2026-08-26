@@ -127,7 +127,18 @@ a { color: inherit; }
 /* Optional real photograph. Hidden until Amara supplies one. */
 .hero-media { position: absolute; inset: 0; z-index: -3; }
 .hero-media[hidden] { display: none; }
-.hero-media img { width: 100%; height: 100%; object-fit: cover; }
+.hero-media picture { display: block; width: 100%; height: 100%; }
+.hero-media img { width: 100%; height: 100%; object-fit: cover; object-position: center 58%; }
+
+/* En vertical la barra vive en la mitad de abajo del encuadre;
+   se sube el punto de anclaje para dejar aire al nombre. */
+@media (max-width: 820px) {
+  .hero-media img { object-position: center 62%; }
+  .hero { min-height: 92svh; padding-top: 6.5rem; }
+  .hero-knot { margin-bottom: 1.4rem; }
+  .rule { margin: 1.3rem auto; }
+  .hero-sub { margin-bottom: 1.7rem; }
+}
 .hero-media::after {
   content: ""; position: absolute; inset: 0;
   background:
@@ -246,6 +257,81 @@ a { color: inherit; }
   animation: bob 2.6s ease-in-out infinite;
 }
 @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(7px); } }
+
+/* ============================================================
+   CARRUSEL DE FAVORITOS
+   Fotografía real de cocina. Riel con scroll-snap: en móvil se
+   arrastra con el dedo, en escritorio con flechas o teclado.
+   ============================================================ */
+.featured { padding: clamp(3rem, 8vw, 5.5rem) 0 clamp(2.5rem, 6vw, 4rem); border-bottom: 1px solid var(--jade-2); }
+.featured-head { text-align: center; margin-bottom: clamp(2rem, 5vw, 3rem); }
+
+.rail-wrap { position: relative; }
+
+.rail {
+  display: flex; gap: 1rem;
+  overflow-x: auto; scroll-snap-type: x mandatory;
+  padding: 0.5rem var(--gutter) 1.25rem;
+  scrollbar-width: none; -ms-overflow-style: none;
+  scroll-behavior: smooth;
+}
+.rail::-webkit-scrollbar { display: none; }
+
+.card {
+  flex: 0 0 min(19rem, 74vw);
+  scroll-snap-align: center;
+  border: 1px solid var(--jade-2); border-radius: 3px;
+  background: var(--jade); overflow: hidden;
+  display: flex; flex-direction: column;
+  transition: border-color 0.35s var(--ease), transform 0.35s var(--ease);
+}
+.card:hover { border-color: color-mix(in srgb, var(--oro) 55%, transparent); transform: translateY(-4px); }
+
+.card-media { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: var(--noche); }
+.card-media img { width: 100%; height: 100%; object-fit: cover; transition: scale 0.7s var(--ease); }
+.card:hover .card-media img { scale: 1.045; }
+.card-media::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(to top, color-mix(in srgb, var(--noche) 72%, transparent) 0%, transparent 46%);
+}
+
+.card-body { padding: 1rem 1.1rem 1.15rem; display: flex; flex-direction: column; gap: 0.45rem; flex: 1; }
+.card-top { display: flex; align-items: baseline; gap: 0.75rem; }
+.card-name { font-family: var(--body); font-size: 1.1rem; font-weight: 600; margin: 0; flex: 1; }
+.card-price { font-family: var(--display); font-size: 1.15rem; color: var(--oro); font-variant-numeric: tabular-nums; }
+.card-note { font-size: 0.92rem; color: var(--hueso-d); margin: 0; flex: 1; }
+
+.card-add {
+  align-self: start; margin-top: 0.35rem;
+  font-family: var(--util); font-size: 0.62rem;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  background: none; border: 1px solid var(--jade-2); color: var(--hueso-d);
+  padding: 0.42rem 0.9rem; border-radius: 999px; cursor: pointer;
+  transition: color 0.25s, border-color 0.25s;
+}
+.card-add:hover, .card-add.has-qty { color: var(--oro); border-color: var(--oro); }
+
+.rail-arrow {
+  position: absolute; top: 42%; translate: 0 -50%; z-index: 4;
+  width: 2.75rem; height: 2.75rem; border-radius: 50%;
+  display: grid; place-items: center; font-size: 1.5rem; line-height: 1;
+  background: color-mix(in srgb, var(--noche) 88%, transparent);
+  border: 1px solid var(--jade-2); color: var(--hueso); cursor: pointer;
+  transition: color 0.25s, border-color 0.25s, opacity 0.25s;
+}
+.rail-arrow:hover { color: var(--oro); border-color: var(--oro); }
+.rail-arrow[disabled] { opacity: 0.25; pointer-events: none; }
+.rail-prev { left: calc(var(--gutter) - 1.4rem); }
+.rail-next { right: calc(var(--gutter) - 1.4rem); }
+@media (max-width: 860px) { .rail-arrow { display: none; } }
+
+.rail-dots { display: flex; justify-content: center; gap: 0.45rem; }
+.rail-dots span {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--jade-2); transition: background 0.3s, width 0.3s;
+}
+.rail-dots span.is-on { background: var(--oro); width: 18px; border-radius: 3px; }
+@media (min-width: 861px) { .rail-dots { display: none; } }
 
 /* ============================================================
    MENU NAV (sticky pills)

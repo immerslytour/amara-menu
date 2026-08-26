@@ -54,12 +54,23 @@ la barra con luz cálida.
 1. Guarda el archivo en `assets/img/` con el nombre correspondiente
 2. En `assets/data/menu.json`, agrega `"image": "brunch"` al menú o grupo
 
-| Nombre de archivo | Dónde aparecería |
+| Nombre de archivo | Qué es |
 |---|---|
-| `brunch.jpg` | Sección Brunch |
-| `molcajete.jpg` | Especialidades de la Casa |
-| `pulpo.jpg` | Grupo Del Mar |
-| `tacos.jpg` | Sección Cena |
+| `hero.jpg` / `hero-1280.jpg` | Barra de Amara, horizontal (escritorio) |
+| `hero-portrait.jpg` | Barra de Amara, vertical (móvil) |
+| `trompito.jpg` | Trompito Pastor — carrusel |
+| `pina-mariscos.jpg` | Piña de Mariscos — carrusel |
+| `chilaquiles.jpg` | Chilaquiles Rojos — carrusel |
+| `tacos-camaron.jpg` | Tacos de Camarón — carrusel |
+
+Todas son fotografía real de Amara con el mismo grade aplicado. Las del
+carrusel están recortadas a 4:5 (1000×1250) más una versión de 500px.
+
+### Cambiar el carrusel
+
+El carrusel se arma desde el arreglo `featured` en `assets/data/menu.json`.
+Cada entrada apunta a un platillo real del menú por su `itemId`, así el botón
+de agregar alimenta la misma cuenta de "Arma tu mesa".
 
 Si el archivo no existe, la sección simplemente no muestra foto. Nunca sale un
 ícono roto.

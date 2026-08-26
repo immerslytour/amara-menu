@@ -13,11 +13,11 @@
      2. En assets/data/menu.json agrega  "image": "brunch"  al menú o grupo.
    Si el archivo no existe, la sección simplemente no muestra foto. */
 const IMAGES = {
-  hero:      "assets/img/hero.jpg",       // interior de Amara
-  brunch:    "assets/img/brunch.jpg",
-  tacos:     "assets/img/tacos.jpg",
-  molcajete: "assets/img/molcajete.jpg",
-  pulpo:     "assets/img/pulpo.jpg"
+  hero:            "assets/img/hero.jpg",
+  "trompito":      "assets/img/trompito.jpg",
+  "pina-mariscos": "assets/img/pina-mariscos.jpg",
+  "chilaquiles":   "assets/img/chilaquiles.jpg",
+  "tacos-camaron": "assets/img/tacos-camaron.jpg"
 };
 
 const COPY = {
@@ -35,7 +35,9 @@ const COPY = {
     star: "Más pedido", veg: "Vegetariano",
     table: "Tu mesa", dish: "platillo", dishes: "platillos",
     add: "Agregar", people: "personas",
-    shareTitle: "Nuestra mesa en Amara"
+    shareTitle: "Nuestra mesa en Amara",
+    featuredKicker: "Fotografía real de cocina", featuredTitle: "Los Favoritos",
+    seeInMenu: "Ver en el menú"
   },
   en: {
     call: "Call", eyebrow: "Fresno, California", tagline: "Modern Mexican Cuisine",
@@ -51,7 +53,9 @@ const COPY = {
     star: "Most popular", veg: "Vegetarian",
     table: "Your table", dish: "dish", dishes: "dishes",
     add: "Add", people: "people",
-    shareTitle: "Our table at Amara"
+    shareTitle: "Our table at Amara",
+    featuredKicker: "Real kitchen photography", featuredTitle: "The Favorites",
+    seeInMenu: "See in menu"
   }
 };
 
@@ -141,9 +145,76 @@ function renderMenu() {
     root.appendChild(sec);
   });
 
+  renderFeatured();
   observeReveals();
   observeSections();
   syncTally();
+}
+
+/* ============================================================
+   CARRUSEL DE FAVORITOS
+   ============================================================ */
+function renderFeatured() {
+  const rail = $("#rail"), dots = $("#railDots");
+  if (!rail || !DATA.featured) return;
+  rail.innerHTML = ""; dots.innerHTML = "";
+
+  DATA.featured.forEach((f, i) => {
+    const card = document.createElement("article");
+    card.className = "card";
+    card.setAttribute("role", "listitem");
+    card.innerHTML = `
+      <div class="card-media"><img></div>
+      <div class="card-body">
+        <div class="card-top">
+          <h3 class="card-name">${f.name[LANG]}</h3>
+          <span class="card-price">${money(f.price)}</span>
+        </div>
+        <p class="card-note">${f.note[LANG]}</p>
+      </div>`;
+
+    mountImage($("img", card), f.img, f.name[LANG]);
+    $("img", card).loading = i < 2 ? "eager" : "lazy";
+
+    const add = document.createElement("button");
+    add.type = "button";
+    add.className = "card-add item-add";
+    add.dataset.id = f.itemId;
+    add.style.opacity = "1";
+    add.addEventListener("click", () =>
+      addToTable(f.itemId, { name: f.name, price: f.price })
+    );
+    paintAddBtn(add, f.itemId);
+    $(".card-body", card).appendChild(add);
+
+    rail.appendChild(card);
+    dots.appendChild(document.createElement("span"));
+  });
+
+  wireRail();
+}
+
+function wireRail() {
+  const rail = $("#rail"), prev = $("#railPrev"), next = $("#railNext");
+  const dots = $$("#railDots span");
+  const step = () => $(".card", rail)?.getBoundingClientRect().width + 16 || 320;
+
+  const update = () => {
+    const max = rail.scrollWidth - rail.clientWidth - 4;
+    prev.disabled = rail.scrollLeft <= 4;
+    next.disabled = rail.scrollLeft >= max;
+    const i = Math.round(rail.scrollLeft / step());
+    dots.forEach((d, n) => d.classList.toggle("is-on", n === i));
+  };
+
+  prev.onclick = () => rail.scrollBy({ left: -step(), behavior: "smooth" });
+  next.onclick = () => rail.scrollBy({ left:  step(), behavior: "smooth" });
+  rail.addEventListener("scroll", update, { passive: true });
+  rail.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight") { e.preventDefault(); next.click(); }
+    if (e.key === "ArrowLeft")  { e.preventDefault(); prev.click(); }
+  });
+  update();
 }
 
 function figure(key, alt) {
