@@ -1,30 +1,50 @@
 {
   "restaurant": {
     "name": "Amara",
-    "tagline": { "es": "Cocina Mexicana Moderna", "en": "Modern Mexican Cuisine" },
-    "motto": { "es": "Experiencia Moderna México", "en": "Experiencia Moderna México" },
+    "tagline": {
+      "es": "Cocina Mexicana Moderna",
+      "en": "Modern Mexican Cuisine"
+    },
+    "motto": {
+      "es": "Experiencia Moderna México",
+      "en": "Experiencia Moderna México"
+    },
     "address": "3874 N Blackstone Ave, Fresno, CA 93726",
     "phone": "+15592933714",
     "phoneDisplay": "(559) 293-3714",
-    "hours": { "es": "Todos los días · 9:00 am – 9:00 pm", "en": "Every day · 9:00 am – 9:00 pm" },
+    "hours": {
+      "es": "Todos los días · 9:00 am – 9:00 pm",
+      "en": "Every day · 9:00 am – 9:00 pm"
+    },
     "instagram": "https://www.instagram.com/amara.fresno/",
     "yelp": "https://www.yelp.com/biz/amara-fresno",
     "maps": "https://maps.google.com/?q=3874+N+Blackstone+Ave+Fresno+CA+93726"
   },
-
   "menus": [
     {
       "id": "brunch",
-      "label": { "es": "Brunch", "en": "Brunch" },
-      "note": { "es": "Servido todos los días desde las 9:00 am", "en": "Served daily from 9:00 am" },
-      "image": "brunch",
+      "label": {
+        "es": "Brunch",
+        "en": "Brunch"
+      },
+      "note": {
+        "es": "Servido todos los días desde las 9:00 am",
+        "en": "Served daily from 9:00 am"
+      },
+      "image": null,
       "groups": [
         {
           "id": "brunch-principales",
-          "label": { "es": "Para Empezar el Día", "en": "To Start the Day" },
+          "label": {
+            "es": "Para Empezar el Día",
+            "en": "To Start the Day"
+          },
           "items": [
             {
-              "name": { "es": "Tres Leches French Toast", "en": "Tres Leches French Toast" },
+              "name": {
+                "es": "Tres Leches French Toast",
+                "en": "Tres Leches French Toast"
+              },
               "price": 19,
               "desc": {
                 "es": "Pan challah grueso remojado en natilla de tres leches, dorado a la plancha y coronado con berries, crema batida, coco tostado y un hilo de dulce de leche.",
@@ -32,7 +52,10 @@
               }
             },
             {
-              "name": { "es": "Huevos Rancheros Amara", "en": "Huevos Rancheros Amara" },
+              "name": {
+                "es": "Huevos Rancheros Amara",
+                "en": "Huevos Rancheros Amara"
+              },
               "price": 15,
               "star": true,
               "desc": {
@@ -41,7 +64,10 @@
               }
             },
             {
-              "name": { "es": "Huevos Amara", "en": "Huevos Amara" },
+              "name": {
+                "es": "Huevos Amara",
+                "en": "Huevos Amara"
+              },
               "price": 22,
               "desc": {
                 "es": "Mitades de bolillo tostado con frijoles refritos, dos huevos al gusto y salsa holandesa de chipotle, servidos con papas asadas.",
@@ -49,7 +75,10 @@
               }
             },
             {
-              "name": { "es": "Amara Omelet", "en": "Amara Omelet" },
+              "name": {
+                "es": "Amara Omelet",
+                "en": "Amara Omelet"
+              },
               "price": 22,
               "star": true,
               "desc": {
@@ -58,17 +87,29 @@
               }
             },
             {
-              "name": { "es": "Amara Avocado Toast", "en": "Amara Avocado Toast" },
+              "name": {
+                "es": "Amara Avocado Toast",
+                "en": "Amara Avocado Toast"
+              },
               "price": 15,
               "star": true,
               "desc": {
                 "es": "Aguacate machacado sobre challah o masa madre tostada, con pico de gallo, queso fresco, aceite de oliva, hojuelas de chile y un toque de limón. Terminado con micro cilantro.",
                 "en": "Smashed avocado on toasted challah or sourdough, topped with pico de gallo, queso fresco, olive oil, chili flakes, and a squeeze of lime. Finished with micro cilantro."
               },
-              "addons": [{ "es": "Agrega 1 huevo", "en": "Add 1 egg", "price": 3 }]
+              "addons": [
+                {
+                  "es": "Agrega 1 huevo",
+                  "en": "Add 1 egg",
+                  "price": 3
+                }
+              ]
             },
             {
-              "name": { "es": "Amara BLTA Sandwich", "en": "Amara BLTA Sandwich" },
+              "name": {
+                "es": "Amara BLTA Sandwich",
+                "en": "Amara BLTA Sandwich"
+              },
               "price": 15,
               "star": true,
               "desc": {
@@ -77,16 +118,28 @@
               }
             },
             {
-              "name": { "es": "Amara Cheeseburger", "en": "Amara Cheeseburger" },
+              "name": {
+                "es": "Amara Cheeseburger",
+                "en": "Amara Cheeseburger"
+              },
               "price": 22,
               "desc": {
                 "es": "Carne de 8 oz en pan brioche con queso cheddar, aioli de chipotle, lechuga, jitomate y cebolla.",
                 "en": "8 oz patty in a brioche bun with cheddar cheese, chipotle aioli, lettuce, tomato and onions."
               },
-              "addons": [{ "es": "Agrega huevo", "en": "Add egg", "price": 3 }]
+              "addons": [
+                {
+                  "es": "Agrega huevo",
+                  "en": "Add egg",
+                  "price": 3
+                }
+              ]
             },
             {
-              "name": { "es": "Chilaquiles Rojos o Verdes", "en": "Chilaquiles Rojos o Verdes" },
+              "name": {
+                "es": "Chilaquiles Rojos o Verdes",
+                "en": "Chilaquiles Rojos o Verdes"
+              },
               "price": 17,
               "desc": {
                 "es": "Totopos crujientes bañados en salsa roja o verde, con crema, queso fresco, cebolla y dos huevos.",
@@ -94,17 +147,29 @@
               }
             },
             {
-              "name": { "es": "Amara Breakfast Burrito", "en": "Amara Breakfast Burrito" },
+              "name": {
+                "es": "Amara Breakfast Burrito",
+                "en": "Amara Breakfast Burrito"
+              },
               "price": 20,
               "star": true,
               "desc": {
                 "es": "Huevo revuelto, arrachera, papas asadas, queso Oaxaca, aguacate, pico de gallo y crema de chipotle en tortilla de harina caliente. Servido con salsa roja.",
                 "en": "Scrambled eggs, arrachera, roasted breakfast potatoes, Oaxaca cheese, avocado, pico de gallo, and chipotle crema wrapped in a warm flour tortilla. Served with salsa roja."
               },
-              "addons": [{ "es": "Hazlo burrito mojado", "en": "Make it a wet burrito", "price": 3 }]
+              "addons": [
+                {
+                  "es": "Hazlo burrito mojado",
+                  "en": "Make it a wet burrito",
+                  "price": 3
+                }
+              ]
             },
             {
-              "name": { "es": "Salmon Brunch Plate", "en": "Salmon Brunch Plate" },
+              "name": {
+                "es": "Salmon Brunch Plate",
+                "en": "Salmon Brunch Plate"
+              },
               "price": 29,
               "desc": {
                 "es": "Salmón a la parrilla, dos huevos al gusto, aguacate y papas asadas.",
@@ -112,7 +177,10 @@
               }
             },
             {
-              "name": { "es": "Breakfast Fajita", "en": "Breakfast Fajita" },
+              "name": {
+                "es": "Breakfast Fajita",
+                "en": "Breakfast Fajita"
+              },
               "price": 17,
               "desc": {
                 "es": "Huevo revuelto con pimientos, cebolla, papa y queso Oaxaca fundido.",
@@ -123,10 +191,16 @@
         },
         {
           "id": "brunch-especialidades",
-          "label": { "es": "Especialidades Amara", "en": "Amara Specialties" },
+          "label": {
+            "es": "Especialidades Amara",
+            "en": "Amara Specialties"
+          },
           "items": [
             {
-              "name": { "es": "Mollete del Patrón", "en": "Mollete del Patrón" },
+              "name": {
+                "es": "Mollete del Patrón",
+                "en": "Mollete del Patrón"
+              },
               "price": 17,
               "desc": {
                 "es": "Bolillo tostado con frijoles refritos, queso fundido, pico de gallo, aguacate y dos huevos.",
@@ -134,7 +208,10 @@
               }
             },
             {
-              "name": { "es": "Brunch Tacos", "en": "Brunch Tacos" },
+              "name": {
+                "es": "Brunch Tacos",
+                "en": "Brunch Tacos"
+              },
               "price": 17,
               "desc": {
                 "es": "A elegir chorizo, papa o arrachera, con huevo revuelto, queso Oaxaca, aguacate y salsa roja.",
@@ -145,10 +222,16 @@
         },
         {
           "id": "brunch-todo-el-dia",
-          "label": { "es": "Todo el Día", "en": "All Day" },
+          "label": {
+            "es": "Todo el Día",
+            "en": "All Day"
+          },
           "items": [
             {
-              "name": { "es": "Elote Mexicano", "en": "Elote Mexicano" },
+              "name": {
+                "es": "Elote Mexicano",
+                "en": "Elote Mexicano"
+              },
               "price": 13,
               "veg": true,
               "desc": {
@@ -157,7 +240,10 @@
               }
             },
             {
-              "name": { "es": "Golden Tacos Dorados", "en": "Golden Tacos Dorados" },
+              "name": {
+                "es": "Golden Tacos Dorados",
+                "en": "Golden Tacos Dorados"
+              },
               "price": 15,
               "desc": {
                 "es": "Tres tacos dorados de pollo deshebrado con salsa verde, crema, lechuga, aguacate y queso fresco.",
@@ -165,7 +251,10 @@
               }
             },
             {
-              "name": { "es": "Amara Salad", "en": "Amara Salad" },
+              "name": {
+                "es": "Amara Salad",
+                "en": "Amara Salad"
+              },
               "price": 17,
               "star": true,
               "desc": {
@@ -174,7 +263,10 @@
               }
             },
             {
-              "name": { "es": "Enchiladas de Doña Aida", "en": "Enchiladas de Doña Aida" },
+              "name": {
+                "es": "Enchiladas de Doña Aida",
+                "en": "Enchiladas de Doña Aida"
+              },
               "price": 27,
               "desc": {
                 "es": "Tres enchiladas con la salsa de tu elección: rojas, verdes, suizas o poblano cremoso, servidas con arroz y frijoles.",
@@ -182,7 +274,10 @@
               }
             },
             {
-              "name": { "es": "Mole de Doña Ester", "en": "Mole de Doña Ester" },
+              "name": {
+                "es": "Mole de Doña Ester",
+                "en": "Mole de Doña Ester"
+              },
               "price": 23,
               "star": true,
               "desc": {
@@ -191,7 +286,10 @@
               }
             },
             {
-              "name": { "es": "Ribeye a la Parrilla", "en": "Ribeye a la Parrilla" },
+              "name": {
+                "es": "Ribeye a la Parrilla",
+                "en": "Ribeye a la Parrilla"
+              },
               "price": 33,
               "star": true,
               "desc": {
@@ -200,7 +298,10 @@
               }
             },
             {
-              "name": { "es": "Trompito Pastor Tacos", "en": "Trompito Pastor Tacos" },
+              "name": {
+                "es": "Trompito Pastor Tacos",
+                "en": "Trompito Pastor Tacos"
+              },
               "price": 25,
               "star": true,
               "desc": {
@@ -209,7 +310,10 @@
               }
             },
             {
-              "name": { "es": "Chile Relleno", "en": "Chile Relleno" },
+              "name": {
+                "es": "Chile Relleno",
+                "en": "Chile Relleno"
+              },
               "price": 23,
               "veg": true,
               "desc": {
@@ -218,7 +322,10 @@
               }
             },
             {
-              "name": { "es": "Chicken Fajitas", "en": "Chicken Fajitas" },
+              "name": {
+                "es": "Chicken Fajitas",
+                "en": "Chicken Fajitas"
+              },
               "price": 25,
               "desc": {
                 "es": "Pollo a la parrilla con pimientos y cebolla, servido con arroz, frijoles, guacamole y tortillas.",
@@ -226,7 +333,10 @@
               }
             },
             {
-              "name": { "es": "Steak Fajitas", "en": "Steak Fajitas" },
+              "name": {
+                "es": "Steak Fajitas",
+                "en": "Steak Fajitas"
+              },
               "price": 29,
               "desc": {
                 "es": "Res a la parrilla con pimientos y cebolla, servida con arroz, frijoles, guacamole y tortillas.",
@@ -237,19 +347,30 @@
         }
       ]
     },
-
     {
       "id": "casa",
-      "label": { "es": "Especialidades de la Casa", "en": "House Specialties" },
-      "note": { "es": "Los platillos que definen a Amara. Para compartir en mesa larga.", "en": "The dishes that define Amara. Made to share." },
-      "image": "molcajete",
+      "label": {
+        "es": "Especialidades de la Casa",
+        "en": "House Specialties"
+      },
+      "note": {
+        "es": "Los platillos que definen a Amara. Para compartir en mesa larga.",
+        "en": "The dishes that define Amara. Made to share."
+      },
+      "image": null,
       "groups": [
         {
           "id": "casa-principal",
-          "label": { "es": "De la Casa", "en": "From the House" },
+          "label": {
+            "es": "De la Casa",
+            "en": "From the House"
+          },
           "items": [
             {
-              "name": { "es": "Birria de Res Tradicional", "en": "Birria de Res Tradicional" },
+              "name": {
+                "es": "Birria de Res Tradicional",
+                "en": "Birria de Res Tradicional"
+              },
               "price": 28,
               "desc": {
                 "es": "Birria de res cocinada lentamente con una mezcla de chiles y especias, servida en una olla tradicional con cebolla, cilantro, limón y tortillas hechas al momento.",
@@ -257,7 +378,10 @@
               }
             },
             {
-              "name": { "es": "Quesabirrias", "en": "Quesabirrias" },
+              "name": {
+                "es": "Quesabirrias",
+                "en": "Quesabirrias"
+              },
               "price": 17,
               "desc": {
                 "es": "3 quesabirrias con cebolla, cilantro y salsa.",
@@ -265,7 +389,10 @@
               }
             },
             {
-              "name": { "es": "Queso Mochomo", "en": "Queso Mochomo" },
+              "name": {
+                "es": "Queso Mochomo",
+                "en": "Queso Mochomo"
+              },
               "price": 17,
               "desc": {
                 "es": "Queso panela asado, bañado con salsa de molcajete y coronado con brisket dorado y crema fresca. Perfecto para compartir.",
@@ -273,7 +400,10 @@
               }
             },
             {
-              "name": { "es": "Molcajete Mixto", "en": "Molcajete Mixto" },
+              "name": {
+                "es": "Molcajete Mixto",
+                "en": "Molcajete Mixto"
+              },
               "price": 46,
               "star": true,
               "desc": {
@@ -282,7 +412,10 @@
               }
             },
             {
-              "name": { "es": "Carne en su Jugo", "en": "Carne en su Jugo" },
+              "name": {
+                "es": "Carne en su Jugo",
+                "en": "Carne en su Jugo"
+              },
               "price": 29,
               "desc": {
                 "es": "Diezmillo de res, frijoles de la olla, tocino dorado, cebollitas cambray y chile caribe. Servida con queso fundido y guacamole.",
@@ -293,11 +426,16 @@
         },
         {
           "id": "casa-mar",
-          "label": { "es": "Del Mar", "en": "From the Sea" },
-          "image": "pulpo",
+          "label": {
+            "es": "Del Mar",
+            "en": "From the Sea"
+          },
           "items": [
             {
-              "name": { "es": "Piña de Mariscos Gratinada", "en": "Piña de Mariscos Gratinada" },
+              "name": {
+                "es": "Piña de Mariscos Gratinada",
+                "en": "Piña de Mariscos Gratinada"
+              },
               "price": 33,
               "desc": {
                 "es": "Media piña asada rellena con camarón, pulpo, tocino y champiñones salteados en una salsa cremosa de tomate y chiles rostizados, gratinada con queso Oaxaca.",
@@ -305,7 +443,10 @@
               }
             },
             {
-              "name": { "es": "Camarones Colgados", "en": "Camarones Colgados" },
+              "name": {
+                "es": "Camarones Colgados",
+                "en": "Camarones Colgados"
+              },
               "price": 29,
               "desc": {
                 "es": "Camarones rellenos de marlín con queso o jaiba con queso, envueltos en tocino y asados al carbón, suspendidos sobre una tabla de madera. Acompañados de papas gajo y tres salsas de la casa.",
@@ -313,7 +454,10 @@
               }
             },
             {
-              "name": { "es": "Pulpo Zarandeado", "en": "Pulpo Zarandeado" },
+              "name": {
+                "es": "Pulpo Zarandeado",
+                "en": "Pulpo Zarandeado"
+              },
               "price": 33,
               "star": true,
               "desc": {
@@ -322,7 +466,10 @@
               }
             },
             {
-              "name": { "es": "Aguachile de Mango Habanero", "en": "Aguachile de Mango Habanero" },
+              "name": {
+                "es": "Aguachile de Mango Habanero",
+                "en": "Aguachile de Mango Habanero"
+              },
               "price": 26,
               "desc": {
                 "es": "Camarón curtido en limón en una salsa de mango y habanero con pepino, cebolla morada y aguacate.",
@@ -330,7 +477,10 @@
               }
             },
             {
-              "name": { "es": "Aguachile de Chiltepín Seco", "en": "Aguachile de Chiltepín Seco" },
+              "name": {
+                "es": "Aguachile de Chiltepín Seco",
+                "en": "Aguachile de Chiltepín Seco"
+              },
               "price": 26,
               "desc": {
                 "es": "Camarón curtido en limón en una salsa roja de chiltepín seco con pepino, cebolla morada y aguacate.",
@@ -338,7 +488,10 @@
               }
             },
             {
-              "name": { "es": "Botana de Callo de Acha", "en": "Botana de Callo de Acha" },
+              "name": {
+                "es": "Botana de Callo de Acha",
+                "en": "Botana de Callo de Acha"
+              },
               "price": 41,
               "desc": {
                 "es": "Botana de callo de acha fresco con chile chiltepín quebrado, sal, pimienta y limón en una cama de pepino y cebolla morada.",
@@ -349,19 +502,30 @@
         }
       ]
     },
-
     {
       "id": "cena",
-      "label": { "es": "Cena", "en": "Dinner" },
-      "note": { "es": "Servida hasta las 9:00 pm", "en": "Served until 9:00 pm" },
-      "image": "tacos",
+      "label": {
+        "es": "Cena",
+        "en": "Dinner"
+      },
+      "note": {
+        "es": "Servida hasta las 9:00 pm",
+        "en": "Served until 9:00 pm"
+      },
+      "image": null,
       "groups": [
         {
           "id": "cena-entradas",
-          "label": { "es": "Entradas", "en": "Appetizers" },
+          "label": {
+            "es": "Entradas",
+            "en": "Appetizers"
+          },
           "items": [
             {
-              "name": { "es": "Guacamole de Ribeye y Chicharrón", "en": "Ribeye Chicharrón Guacamole" },
+              "name": {
+                "es": "Guacamole de Ribeye y Chicharrón",
+                "en": "Ribeye Chicharrón Guacamole"
+              },
               "price": 29,
               "star": true,
               "desc": {
@@ -370,7 +534,10 @@
               }
             },
             {
-              "name": { "es": "Elote Mexicano", "en": "Elote Mexicano" },
+              "name": {
+                "es": "Elote Mexicano",
+                "en": "Elote Mexicano"
+              },
               "price": 13,
               "veg": true,
               "desc": {
@@ -379,7 +546,10 @@
               }
             },
             {
-              "name": { "es": "Golden Tacos Dorados", "en": "Golden Tacos Dorados" },
+              "name": {
+                "es": "Golden Tacos Dorados",
+                "en": "Golden Tacos Dorados"
+              },
               "price": 15,
               "desc": {
                 "es": "Tres tacos dorados de pollo deshebrado con salsa verde, crema, lechuga y queso fresco.",
@@ -387,7 +557,10 @@
               }
             },
             {
-              "name": { "es": "Guacamole y Totopos", "en": "Guacamole and Chips" },
+              "name": {
+                "es": "Guacamole y Totopos",
+                "en": "Guacamole and Chips"
+              },
               "price": 15,
               "veg": true,
               "desc": {
@@ -396,7 +569,10 @@
               }
             },
             {
-              "name": { "es": "Coliflor con Miel de Chipotle", "en": "Chipotle Honey Cauliflower Bites" },
+              "name": {
+                "es": "Coliflor con Miel de Chipotle",
+                "en": "Chipotle Honey Cauliflower Bites"
+              },
               "price": 15,
               "veg": true,
               "desc": {
@@ -405,7 +581,10 @@
               }
             },
             {
-              "name": { "es": "Ceviche de Camarón", "en": "Ceviche de Camarón" },
+              "name": {
+                "es": "Ceviche de Camarón",
+                "en": "Ceviche de Camarón"
+              },
               "price": 23,
               "desc": {
                 "es": "Camarón fresco marinado en salsa negra y jugo de limón con jitomate, cebolla, cilantro, pepino y aguacate, servido con tostadas.",
@@ -416,10 +595,16 @@
         },
         {
           "id": "cena-ensaladas",
-          "label": { "es": "Ensaladas", "en": "Salads" },
+          "label": {
+            "es": "Ensaladas",
+            "en": "Salads"
+          },
           "items": [
             {
-              "name": { "es": "Amara Salad", "en": "Amara Salad" },
+              "name": {
+                "es": "Amara Salad",
+                "en": "Amara Salad"
+              },
               "price": 20,
               "star": true,
               "desc": {
@@ -428,7 +613,10 @@
               }
             },
             {
-              "name": { "es": "Ensalada del Patrón", "en": "Ensalada del Patrón" },
+              "name": {
+                "es": "Ensalada del Patrón",
+                "en": "Ensalada del Patrón"
+              },
               "price": 27,
               "desc": {
                 "es": "Arrachera a la parrilla, aguacate, verduras asadas, pepitas, queso fresco y vinagreta de cilantro y limón.",
@@ -439,10 +627,16 @@
         },
         {
           "id": "cena-tradicional",
-          "label": { "es": "Tradicional", "en": "Traditional" },
+          "label": {
+            "es": "Tradicional",
+            "en": "Traditional"
+          },
           "items": [
             {
-              "name": { "es": "Enchiladas de Doña Aida", "en": "Enchiladas de Doña Aida" },
+              "name": {
+                "es": "Enchiladas de Doña Aida",
+                "en": "Enchiladas de Doña Aida"
+              },
               "price": 23,
               "desc": {
                 "es": "Tres enchiladas de pollo con la salsa de tu elección: rojas, verdes, rancheras, mole o poblano cremoso, servidas con arroz y frijoles.",
@@ -450,7 +644,10 @@
               }
             },
             {
-              "name": { "es": "Mole de Doña Ester", "en": "Mole de Doña Ester" },
+              "name": {
+                "es": "Mole de Doña Ester",
+                "en": "Mole de Doña Ester"
+              },
               "price": 27,
               "star": true,
               "desc": {
@@ -459,7 +656,10 @@
               }
             },
             {
-              "name": { "es": "Chile Relleno", "en": "Chile Relleno" },
+              "name": {
+                "es": "Chile Relleno",
+                "en": "Chile Relleno"
+              },
               "price": 23,
               "veg": true,
               "desc": {
@@ -471,34 +671,64 @@
         },
         {
           "id": "cena-tacos",
-          "label": { "es": "Tacos", "en": "Tacos" },
+          "label": {
+            "es": "Tacos",
+            "en": "Tacos"
+          },
           "note": {
             "es": "3 por orden · no se combinan. Proteína a elegir, con col, aguacate, aioli de chipotle y salsa de mango.",
             "en": "3 per order · no mix & match. A selection of protein, with coleslaw, avocado, chipotle aioli and mango sauce."
           },
           "items": [
             {
-              "name": { "es": "Arrachera del Rancho", "en": "Arrachera del Rancho" },
+              "name": {
+                "es": "Arrachera del Rancho",
+                "en": "Arrachera del Rancho"
+              },
               "price": 20,
-              "desc": { "es": "Res deshebrada al estilo del rancho.", "en": "Braised beef, rancho style." }
+              "desc": {
+                "es": "Res deshebrada al estilo del rancho.",
+                "en": "Braised beef, rancho style."
+              }
             },
             {
-              "name": { "es": "Pescado", "en": "Fish" },
+              "name": {
+                "es": "Pescado",
+                "en": "Fish"
+              },
               "price": 19,
-              "desc": { "es": "", "en": "" }
+              "desc": {
+                "es": "",
+                "en": ""
+              }
             },
             {
-              "name": { "es": "Camarón", "en": "Shrimp" },
+              "name": {
+                "es": "Camarón",
+                "en": "Shrimp"
+              },
               "price": 25,
-              "desc": { "es": "", "en": "" }
+              "desc": {
+                "es": "",
+                "en": ""
+              }
             },
             {
-              "name": { "es": "Pollo", "en": "Chicken" },
+              "name": {
+                "es": "Pollo",
+                "en": "Chicken"
+              },
               "price": 20,
-              "desc": { "es": "", "en": "" }
+              "desc": {
+                "es": "",
+                "en": ""
+              }
             },
             {
-              "name": { "es": "Trompito Pastor", "en": "Trompito Pastor" },
+              "name": {
+                "es": "Trompito Pastor",
+                "en": "Trompito Pastor"
+              },
               "price": 25,
               "star": true,
               "desc": {
@@ -510,10 +740,16 @@
         },
         {
           "id": "cena-parrilla",
-          "label": { "es": "De la Parrilla", "en": "Del Grill" },
+          "label": {
+            "es": "De la Parrilla",
+            "en": "Del Grill"
+          },
           "items": [
             {
-              "name": { "es": "Ribeye a la Parrilla", "en": "Ribeye a la Parrilla" },
+              "name": {
+                "es": "Ribeye a la Parrilla",
+                "en": "Ribeye a la Parrilla"
+              },
               "price": 33,
               "star": true,
               "desc": {
@@ -522,7 +758,10 @@
               }
             },
             {
-              "name": { "es": "Amara Cheeseburger", "en": "Amara Cheeseburger" },
+              "name": {
+                "es": "Amara Cheeseburger",
+                "en": "Amara Cheeseburger"
+              },
               "price": 22,
               "desc": {
                 "es": "Carne de 8 oz en pan brioche con queso cheddar, aioli de chipotle, lechuga, jitomate y cebolla.",
@@ -530,7 +769,10 @@
               }
             },
             {
-              "name": { "es": "Carne Tampiqueña", "en": "Carne Tampiqueña" },
+              "name": {
+                "es": "Carne Tampiqueña",
+                "en": "Carne Tampiqueña"
+              },
               "price": 33,
               "desc": {
                 "es": "Arrachera a la parrilla con enchilada de queso, arroz, frijoles y cebolla asada.",
@@ -541,35 +783,65 @@
         },
         {
           "id": "cena-fajitas",
-          "label": { "es": "Fajitas", "en": "Fajitas" },
+          "label": {
+            "es": "Fajitas",
+            "en": "Fajitas"
+          },
           "note": {
             "es": "Servidas con arroz, frijoles, guacamole y tortillas.",
             "en": "Served with rice, beans, guacamole, and tortillas."
           },
           "items": [
             {
-              "name": { "es": "Fajitas de Pollo", "en": "Chicken Fajitas" },
+              "name": {
+                "es": "Fajitas de Pollo",
+                "en": "Chicken Fajitas"
+              },
               "price": 27,
-              "desc": { "es": "Pollo a la parrilla con pimientos y cebolla.", "en": "Grilled chicken with peppers and onions." }
+              "desc": {
+                "es": "Pollo a la parrilla con pimientos y cebolla.",
+                "en": "Grilled chicken with peppers and onions."
+              }
             },
             {
-              "name": { "es": "Fajitas de Res", "en": "Steak Fajitas" },
+              "name": {
+                "es": "Fajitas de Res",
+                "en": "Steak Fajitas"
+              },
               "price": 29,
-              "desc": { "es": "Res a la parrilla con pimientos y cebolla.", "en": "Grilled steak with peppers and onions." }
+              "desc": {
+                "es": "Res a la parrilla con pimientos y cebolla.",
+                "en": "Grilled steak with peppers and onions."
+              }
             },
             {
-              "name": { "es": "Fajitas de Camarón", "en": "Shrimp Fajitas" },
+              "name": {
+                "es": "Fajitas de Camarón",
+                "en": "Shrimp Fajitas"
+              },
               "price": 29,
-              "desc": { "es": "Camarón salteado al ajo con pimientos y cebolla.", "en": "Garlic sautéed shrimp with peppers and onions." }
+              "desc": {
+                "es": "Camarón salteado al ajo con pimientos y cebolla.",
+                "en": "Garlic sautéed shrimp with peppers and onions."
+              }
             },
             {
-              "name": { "es": "Fajitas Mixtas", "en": "Mixed Fajitas" },
+              "name": {
+                "es": "Fajitas Mixtas",
+                "en": "Mixed Fajitas"
+              },
               "price": 33,
               "star": true,
-              "desc": { "es": "Pollo, res y camarón con pimientos y cebolla.", "en": "Chicken, steak, and shrimp with peppers and onions." }
+              "desc": {
+                "es": "Pollo, res y camarón con pimientos y cebolla.",
+                "en": "Chicken, steak, and shrimp with peppers and onions."
+              }
             },
             {
-              "name": { "es": "Fajitas Vegetarianas", "en": "Veggie Fajitas" },
+              "name": {
+                "es": "Fajitas Vegetarianas",
+                "en": "Veggie Fajitas"
+              },
               "price": 25,
               "veg": true,
               "desc": {
@@ -581,10 +853,16 @@
         },
         {
           "id": "cena-salmon-sushi",
-          "label": { "es": "Salmón y Sushi", "en": "Salmon & Sushi" },
+          "label": {
+            "es": "Salmón y Sushi",
+            "en": "Salmon & Sushi"
+          },
           "items": [
             {
-              "name": { "es": "Grilled Salmon Plate", "en": "Grilled Salmon Plate" },
+              "name": {
+                "es": "Grilled Salmon Plate",
+                "en": "Grilled Salmon Plate"
+              },
               "price": 29,
               "desc": {
                 "es": "Filete de salmón a la parrilla servido con verduras de temporada y arroz.",
@@ -592,12 +870,21 @@
               }
             },
             {
-              "name": { "es": "Salmon Sushi Roll", "en": "Salmon Sushi Roll" },
+              "name": {
+                "es": "Salmon Sushi Roll",
+                "en": "Salmon Sushi Roll"
+              },
               "price": 25,
-              "desc": { "es": "Aguacate, pepino y queso crema.", "en": "Avocado, cucumber, and cream cheese." }
+              "desc": {
+                "es": "Aguacate, pepino y queso crema.",
+                "en": "Avocado, cucumber, and cream cheese."
+              }
             },
             {
-              "name": { "es": "559 Sushi", "en": "559 Sushi" },
+              "name": {
+                "es": "559 Sushi",
+                "en": "559 Sushi"
+              },
               "price": 23,
               "desc": {
                 "es": "Arroz, queso crema, aguacate, pepino, camarón y surimi.",
@@ -605,7 +892,10 @@
               }
             },
             {
-              "name": { "es": "California Roll", "en": "California Roll" },
+              "name": {
+                "es": "California Roll",
+                "en": "California Roll"
+              },
               "price": 19,
               "desc": {
                 "es": "Aguacate, pepino, alga nori, surimi y ajonjolí.",
@@ -613,7 +903,10 @@
               }
             },
             {
-              "name": { "es": "Amara's Sushi", "en": "Amara's Sushi" },
+              "name": {
+                "es": "Amara's Sushi",
+                "en": "Amara's Sushi"
+              },
               "price": 29,
               "star": true,
               "desc": {
@@ -625,19 +918,30 @@
         }
       ]
     },
-
     {
       "id": "postres",
-      "label": { "es": "Postres", "en": "Desserts" },
-      "note": { "es": "Todos a $10", "en": "All $10" },
+      "label": {
+        "es": "Postres",
+        "en": "Desserts"
+      },
+      "note": {
+        "es": "Todos a $10",
+        "en": "All $10"
+      },
       "image": null,
       "groups": [
         {
           "id": "postres-todos",
-          "label": { "es": "Para Cerrar", "en": "To Finish" },
+          "label": {
+            "es": "Para Cerrar",
+            "en": "To Finish"
+          },
           "items": [
             {
-              "name": { "es": "Churro Sundae", "en": "Churro Sundae" },
+              "name": {
+                "es": "Churro Sundae",
+                "en": "Churro Sundae"
+              },
               "price": 10,
               "star": true,
               "desc": {
@@ -646,7 +950,10 @@
               }
             },
             {
-              "name": { "es": "Cheesecake", "en": "Cheesecake" },
+              "name": {
+                "es": "Cheesecake",
+                "en": "Cheesecake"
+              },
               "price": 10,
               "desc": {
                 "es": "Cheesecake cremoso con crema batida, compota de berries y berries frescos.",

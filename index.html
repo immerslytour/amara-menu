@@ -66,14 +66,29 @@
 </header>
 
 <!-- ============ HERO ============ -->
+<!--
+  Sin foto por decisión: no hay fotografía real del interior de Amara todavía.
+  Para activarla: pon el archivo en assets/img/hero.jpg y quita el atributo
+  hidden del <div class="hero-media"> de abajo. El resto se acomoda solo.
+-->
 <section class="hero" id="top">
-  <div class="hero-media">
-    <img src="assets/img/hero.png"
-         data-fallback="https://d8j0ntlcm91z4.cloudfront.net/user_3G3YsPEoYVEm18Lcqm4VbjYAo3M/hf_20260826_185747_d6a3fff4-edaa-4cf8-a818-b8aee8c2e3f2.png"
-         alt="" fetchpriority="high">
+
+  <div class="hero-media" hidden>
+    <img src="assets/img/hero.jpg" alt="" fetchpriority="high">
   </div>
 
+  <!-- luz de vela -->
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="hero-grain" aria-hidden="true"></div>
+
   <div class="hero-inner">
+    <!-- el nudo del menú impreso de Amara, dibujándose -->
+    <svg class="hero-knot" viewBox="0 0 200 200" aria-hidden="true">
+      <rect class="k1" x="42" y="42" width="116" height="116" rx="26" transform="rotate(45 100 100)"/>
+      <rect class="k2" x="42" y="42" width="116" height="116" rx="26"/>
+      <rect class="k3" x="72" y="72" width="56" height="56" rx="13" transform="rotate(45 100 100)"/>
+    </svg>
+
     <p class="hero-eyebrow" data-i18n="eyebrow">Fresno, California</p>
     <h1 class="wordmark">Amara</h1>
     <div class="rule rule-diamond"></div>

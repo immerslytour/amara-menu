@@ -124,18 +124,65 @@ a { color: inherit; }
   padding: 8rem var(--gutter) 4rem;
   isolation: isolate; overflow: hidden;
 }
-.hero-media { position: absolute; inset: 0; z-index: -2; }
+/* Optional real photograph. Hidden until Amara supplies one. */
+.hero-media { position: absolute; inset: 0; z-index: -3; }
+.hero-media[hidden] { display: none; }
 .hero-media img { width: 100%; height: 100%; object-fit: cover; }
 .hero-media::after {
   content: ""; position: absolute; inset: 0;
   background:
-    radial-gradient(120% 85% at 50% 40%, transparent 0%, color-mix(in srgb, var(--noche) 62%, transparent) 55%, var(--noche) 100%),
-    linear-gradient(to bottom, color-mix(in srgb, var(--noche) 85%, transparent) 0%, transparent 28%, transparent 55%, var(--noche) 100%);
+    radial-gradient(120% 85% at 50% 40%, transparent 0%, color-mix(in srgb, var(--noche) 66%, transparent) 55%, var(--noche) 100%),
+    linear-gradient(to bottom, color-mix(in srgb, var(--noche) 88%, transparent) 0%, transparent 30%, transparent 55%, var(--noche) 100%);
 }
-/* fallback if the image hasn't been fetched yet */
-.hero-media { background: radial-gradient(circle at 50% 45%, #1E3129 0%, var(--noche) 70%); }
 
-.hero-inner { max-width: 46rem; }
+/* Candlelight. Two warm pools, breathing slightly out of sync. */
+.hero-glow { position: absolute; inset: 0; z-index: -2; }
+.hero-glow::before, .hero-glow::after {
+  content: ""; position: absolute; border-radius: 50%;
+  filter: blur(60px);
+}
+.hero-glow::before {
+  width: 78vmin; height: 78vmin; left: 50%; top: 42%;
+  translate: -50% -50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--oro) 17%, transparent) 0%, transparent 68%);
+  animation: breathe 9s ease-in-out infinite;
+}
+.hero-glow::after {
+  width: 46vmin; height: 46vmin; left: 22%; bottom: 6%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--carmin) 20%, transparent) 0%, transparent 70%);
+  animation: breathe 12s ease-in-out infinite reverse;
+}
+@keyframes breathe {
+  0%, 100% { opacity: 0.72; transform: scale(1); }
+  50%      { opacity: 1;    transform: scale(1.08); }
+}
+
+/* Film grain — keeps the flat darkness from looking like a CSS gradient. */
+.hero-grain {
+  position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  opacity: 0.22; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.hero-inner { max-width: 46rem; position: relative; }
+
+/* ---------- The knot: Amara's own mark, drawn line by line ---------- */
+.hero-knot {
+  width: clamp(5.5rem, 15vmin, 9rem);
+  height: clamp(5.5rem, 15vmin, 9rem);
+  margin: 0 auto 2.2rem;
+  display: block; overflow: visible;
+}
+.hero-knot rect {
+  fill: none; stroke: var(--oro); stroke-width: 3;
+  stroke-dasharray: 480; stroke-dashoffset: 480;
+  animation: knot-draw 2.2s var(--ease) forwards;
+  filter: drop-shadow(0 0 14px color-mix(in srgb, var(--oro) 45%, transparent));
+}
+.hero-knot .k1 { animation-delay: 0.15s; }
+.hero-knot .k2 { animation-delay: 0.45s; opacity: 0.55; }
+.hero-knot .k3 { animation-delay: 0.85s; stroke-width: 4; }
+@keyframes knot-draw { to { stroke-dashoffset: 0; } }
 
 .hero-eyebrow {
   font-family: var(--util); font-size: 0.68rem; font-weight: 400;

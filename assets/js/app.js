@@ -4,17 +4,20 @@
    scroll-spy, and "Arma tu mesa" (the running table tally).
    ============================================================ */
 
-const CDN = "https://d8j0ntlcm91z4.cloudfront.net/user_3G3YsPEoYVEm18Lcqm4VbjYAo3M/";
+/* ---------- Fotografía ----------
+   Este sitio NO usa imágenes generadas por IA. Solo fotografía real de Amara.
+   Mientras no la haya, las secciones se ven sin foto — a propósito.
 
-/* Local file first; if it isn't committed yet, fall back to the
-   Higgsfield CDN so the page never renders broken.
-   Run ./fetch-images.sh once to make this fully self-hosted. */
+   Para activar una foto:
+     1. Guarda el archivo en assets/img/ con uno de estos nombres.
+     2. En assets/data/menu.json agrega  "image": "brunch"  al menú o grupo.
+   Si el archivo no existe, la sección simplemente no muestra foto. */
 const IMAGES = {
-  hero:      { local: "assets/img/hero.png",      remote: CDN + "hf_20260826_185747_d6a3fff4-edaa-4cf8-a818-b8aee8c2e3f2.png" },
-  brunch:    { local: "assets/img/brunch.png",    remote: CDN + "hf_20260826_185825_3b5bb598-3e14-4961-9642-ab41c2c9980f.png" },
-  tacos:     { local: "assets/img/tacos.png",     remote: CDN + "hf_20260826_185825_9b5e4fcd-e508-4450-a3a9-f33129d60edf.png" },
-  molcajete: { local: "assets/img/molcajete.png", remote: CDN + "hf_20260826_185825_19548647-44fb-4246-89f0-4d9e49b9c28a.png" },
-  pulpo:     { local: "assets/img/pulpo.png",     remote: CDN + "hf_20260826_185825_acdd9203-9e10-4363-89ae-79979eecd3f5.png" }
+  hero:      "assets/img/hero.jpg",       // interior de Amara
+  brunch:    "assets/img/brunch.jpg",
+  tacos:     "assets/img/tacos.jpg",
+  molcajete: "assets/img/molcajete.jpg",
+  pulpo:     "assets/img/pulpo.jpg"
 };
 
 const COPY = {
@@ -69,11 +72,9 @@ function mountImage(el, key, alt = "") {
   el.alt = alt;
   el.loading = "lazy";
   el.decoding = "async";
-  el.addEventListener("error", function onErr() {
-    el.removeEventListener("error", onErr);
-    el.src = src.remote;
-  });
-  el.src = src.local;
+  /* No hay foto todavía → se retira el marco completo, sin ícono roto. */
+  el.addEventListener("error", () => el.closest(".section-figure")?.remove(), { once: true });
+  el.src = src;
 }
 
 /* ============================================================

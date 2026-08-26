@@ -31,30 +31,39 @@ Si Amara quiere `menu.amaramexicancuisine.com`:
 
 ---
 
-## Imágenes
+## Fotografía
 
-Las fotos son **generadas con IA** (Higgsfield · Nano Banana Pro) y funcionan como
-*placeholders de alta calidad*. Antes de que el sitio sea público conviene
-reemplazarlas por fotografía real de los platillos de Amara.
+**Este sitio no usa imágenes generadas por IA.** Solo fotografía real de Amara.
 
-Ahorita el sitio carga desde el CDN de Higgsfield. Para volverlo autónomo:
+Mientras no haya fotos, el sitio funciona sin ellas — el diseño está hecho para
+sostenerse con tipografía. La portada usa el nudo dorado del menú impreso de
+Amara, animado. Es el único elemento visual y es auténtico de la marca.
 
-```bash
-chmod +x fetch-images.sh
-./fetch-images.sh
-git add assets/img && git commit -m "Add imagery" && git push
-```
+### Activar la foto de portada
 
-Para cambiar una foto: reemplaza el archivo en `assets/img/` con el mismo nombre.
-No hay que tocar código.
+1. Guarda la foto del interior en `assets/img/hero.jpg`
+2. En `index.html`, quita el atributo `hidden` de `<div class="hero-media" hidden>`
+3. `git add . && git commit -m "Foto del interior" && git push`
 
-| Archivo | Dónde aparece |
+El nudo y la tipografía se quedan encima con degradado. Funciona mejor con una
+foto **oscura, horizontal, sin gente mirando a cámara** — un plano del comedor o
+la barra con luz cálida.
+
+### Activar fotos en las secciones
+
+1. Guarda el archivo en `assets/img/` con el nombre correspondiente
+2. En `assets/data/menu.json`, agrega `"image": "brunch"` al menú o grupo
+
+| Nombre de archivo | Dónde aparecería |
 |---|---|
-| `hero.png` | Portada |
-| `brunch.png` | Sección Brunch |
-| `molcajete.png` | Especialidades de la Casa |
-| `pulpo.png` | Grupo Del Mar |
-| `tacos.png` | Sección Cena |
+| `hero.jpg` | Portada |
+| `brunch.jpg` | Sección Brunch |
+| `molcajete.jpg` | Especialidades de la Casa |
+| `pulpo.jpg` | Grupo Del Mar |
+| `tacos.jpg` | Sección Cena |
+
+Si el archivo no existe, la sección simplemente no muestra foto. Nunca sale un
+ícono roto.
 
 ---
 
@@ -90,8 +99,7 @@ assets/
   css/style.css      — todo el diseño
   js/app.js          — render, idioma, "Arma tu mesa"
   data/menu.json     — TODO el contenido del menú
-  img/               — imágenes (correr fetch-images.sh)
-fetch-images.sh
+  img/               — fotografía real (vacío hasta que el cliente la envíe)
 ```
 
 ---
