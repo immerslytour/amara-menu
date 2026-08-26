@@ -1,0 +1,661 @@
+{
+  "restaurant": {
+    "name": "Amara",
+    "tagline": { "es": "Cocina Mexicana Moderna", "en": "Modern Mexican Cuisine" },
+    "motto": { "es": "Experiencia Moderna México", "en": "Experiencia Moderna México" },
+    "address": "3874 N Blackstone Ave, Fresno, CA 93726",
+    "phone": "+15592933714",
+    "phoneDisplay": "(559) 293-3714",
+    "hours": { "es": "Todos los días · 9:00 am – 9:00 pm", "en": "Every day · 9:00 am – 9:00 pm" },
+    "instagram": "https://www.instagram.com/amara.fresno/",
+    "yelp": "https://www.yelp.com/biz/amara-fresno",
+    "maps": "https://maps.google.com/?q=3874+N+Blackstone+Ave+Fresno+CA+93726"
+  },
+
+  "menus": [
+    {
+      "id": "brunch",
+      "label": { "es": "Brunch", "en": "Brunch" },
+      "note": { "es": "Servido todos los días desde las 9:00 am", "en": "Served daily from 9:00 am" },
+      "image": "brunch",
+      "groups": [
+        {
+          "id": "brunch-principales",
+          "label": { "es": "Para Empezar el Día", "en": "To Start the Day" },
+          "items": [
+            {
+              "name": { "es": "Tres Leches French Toast", "en": "Tres Leches French Toast" },
+              "price": 19,
+              "desc": {
+                "es": "Pan challah grueso remojado en natilla de tres leches, dorado a la plancha y coronado con berries, crema batida, coco tostado y un hilo de dulce de leche.",
+                "en": "Thick challah soaked in tres leches custard, grilled golden and topped with berries, whipped cream, toasted coconut, and dulce de leche drizzle."
+              }
+            },
+            {
+              "name": { "es": "Huevos Rancheros Amara", "en": "Huevos Rancheros Amara" },
+              "price": 15,
+              "star": true,
+              "desc": {
+                "es": "Dos huevos sobre tortillas de maíz crujientes con salsa ranchera, queso fresco, aguacate y papas asadas.",
+                "en": "Two eggs over crispy corn tortillas with ranchera sauce, queso fresco, avocado, and roasted potatoes."
+              }
+            },
+            {
+              "name": { "es": "Huevos Amara", "en": "Huevos Amara" },
+              "price": 22,
+              "desc": {
+                "es": "Mitades de bolillo tostado con frijoles refritos, dos huevos al gusto y salsa holandesa de chipotle, servidos con papas asadas.",
+                "en": "Toasted bolillo halves topped with refried beans, two eggs any style, and chipotle hollandaise sauce, served with roasted breakfast potatoes."
+              }
+            },
+            {
+              "name": { "es": "Amara Omelet", "en": "Amara Omelet" },
+              "price": 22,
+              "star": true,
+              "desc": {
+                "es": "Omelet de tres huevos con queso Oaxaca, pimientos, cebolla, aguacate y queso fresco, bañado en salsa de poblano y servido con papas asadas.",
+                "en": "Three-egg omelet with Oaxaca cheese, peppers, onions, avocado, and queso fresco topped with poblano sauce and served with roasted breakfast potatoes."
+              }
+            },
+            {
+              "name": { "es": "Amara Avocado Toast", "en": "Amara Avocado Toast" },
+              "price": 15,
+              "star": true,
+              "desc": {
+                "es": "Aguacate machacado sobre challah o masa madre tostada, con pico de gallo, queso fresco, aceite de oliva, hojuelas de chile y un toque de limón. Terminado con micro cilantro.",
+                "en": "Smashed avocado on toasted challah or sourdough, topped with pico de gallo, queso fresco, olive oil, chili flakes, and a squeeze of lime. Finished with micro cilantro."
+              },
+              "addons": [{ "es": "Agrega 1 huevo", "en": "Add 1 egg", "price": 3 }]
+            },
+            {
+              "name": { "es": "Amara BLTA Sandwich", "en": "Amara BLTA Sandwich" },
+              "price": 15,
+              "star": true,
+              "desc": {
+                "es": "Tocino applewood, aguacate, jitomate, lechuga crujiente y mayonesa de chipotle en brioche tostado. Servido con papas asadas.",
+                "en": "Applewood bacon, avocado, tomato, crisp lettuce, and chipotle mayo on toasted brioche. Served with roasted breakfast potatoes."
+              }
+            },
+            {
+              "name": { "es": "Amara Cheeseburger", "en": "Amara Cheeseburger" },
+              "price": 22,
+              "desc": {
+                "es": "Carne de 8 oz en pan brioche con queso cheddar, aioli de chipotle, lechuga, jitomate y cebolla.",
+                "en": "8 oz patty in a brioche bun with cheddar cheese, chipotle aioli, lettuce, tomato and onions."
+              },
+              "addons": [{ "es": "Agrega huevo", "en": "Add egg", "price": 3 }]
+            },
+            {
+              "name": { "es": "Chilaquiles Rojos o Verdes", "en": "Chilaquiles Rojos o Verdes" },
+              "price": 17,
+              "desc": {
+                "es": "Totopos crujientes bañados en salsa roja o verde, con crema, queso fresco, cebolla y dos huevos.",
+                "en": "Crispy tortilla chips simmered in red or green salsa, topped with crema, queso fresco, onion, and two eggs."
+              }
+            },
+            {
+              "name": { "es": "Amara Breakfast Burrito", "en": "Amara Breakfast Burrito" },
+              "price": 20,
+              "star": true,
+              "desc": {
+                "es": "Huevo revuelto, arrachera, papas asadas, queso Oaxaca, aguacate, pico de gallo y crema de chipotle en tortilla de harina caliente. Servido con salsa roja.",
+                "en": "Scrambled eggs, arrachera, roasted breakfast potatoes, Oaxaca cheese, avocado, pico de gallo, and chipotle crema wrapped in a warm flour tortilla. Served with salsa roja."
+              },
+              "addons": [{ "es": "Hazlo burrito mojado", "en": "Make it a wet burrito", "price": 3 }]
+            },
+            {
+              "name": { "es": "Salmon Brunch Plate", "en": "Salmon Brunch Plate" },
+              "price": 29,
+              "desc": {
+                "es": "Salmón a la parrilla, dos huevos al gusto, aguacate y papas asadas.",
+                "en": "Grilled salmon, two eggs any style, avocado, roasted potatoes."
+              }
+            },
+            {
+              "name": { "es": "Breakfast Fajita", "en": "Breakfast Fajita" },
+              "price": 17,
+              "desc": {
+                "es": "Huevo revuelto con pimientos, cebolla, papa y queso Oaxaca fundido.",
+                "en": "Eggs scrambled with peppers, onions, potatoes, and melted Oaxaca cheese."
+              }
+            }
+          ]
+        },
+        {
+          "id": "brunch-especialidades",
+          "label": { "es": "Especialidades Amara", "en": "Amara Specialties" },
+          "items": [
+            {
+              "name": { "es": "Mollete del Patrón", "en": "Mollete del Patrón" },
+              "price": 17,
+              "desc": {
+                "es": "Bolillo tostado con frijoles refritos, queso fundido, pico de gallo, aguacate y dos huevos.",
+                "en": "Toasted bolillo bread with refried beans, melted cheese, pico de gallo, avocado, and two eggs."
+              }
+            },
+            {
+              "name": { "es": "Brunch Tacos", "en": "Brunch Tacos" },
+              "price": 17,
+              "desc": {
+                "es": "A elegir chorizo, papa o arrachera, con huevo revuelto, queso Oaxaca, aguacate y salsa roja.",
+                "en": "Choice of chorizo, potato, or skirt steak with scrambled egg, Oaxaca cheese, avocado and salsa roja."
+              }
+            }
+          ]
+        },
+        {
+          "id": "brunch-todo-el-dia",
+          "label": { "es": "Todo el Día", "en": "All Day" },
+          "items": [
+            {
+              "name": { "es": "Elote Mexicano", "en": "Elote Mexicano" },
+              "price": 13,
+              "veg": true,
+              "desc": {
+                "es": "Elote a la parrilla untado con crema de chipotle, queso cotija y tajín.",
+                "en": "Grilled corn brushed with chipotle crema, cotija cheese, and tajín."
+              }
+            },
+            {
+              "name": { "es": "Golden Tacos Dorados", "en": "Golden Tacos Dorados" },
+              "price": 15,
+              "desc": {
+                "es": "Tres tacos dorados de pollo deshebrado con salsa verde, crema, lechuga, aguacate y queso fresco.",
+                "en": "Three crispy tacos with shredded chicken, salsa verde, crema, lettuce, avocado and queso fresco."
+              }
+            },
+            {
+              "name": { "es": "Amara Salad", "en": "Amara Salad" },
+              "price": 17,
+              "star": true,
+              "desc": {
+                "es": "Lechuga romana, elote asado, frijol negro, pico de gallo, aguacate, queso fresco y aderezo de aguacate y cilantro.",
+                "en": "Romaine, roasted corn, black beans, pico de gallo, avocado, queso fresco, and avocado-cilantro dressing."
+              }
+            },
+            {
+              "name": { "es": "Enchiladas de Doña Aida", "en": "Enchiladas de Doña Aida" },
+              "price": 27,
+              "desc": {
+                "es": "Tres enchiladas con la salsa de tu elección: rojas, verdes, suizas o poblano cremoso, servidas con arroz y frijoles.",
+                "en": "Three enchiladas with your choice of sauce: rojas, verdes, suizas, or creamy poblano, served with rice & beans."
+              }
+            },
+            {
+              "name": { "es": "Mole de Doña Ester", "en": "Mole de Doña Ester" },
+              "price": 23,
+              "star": true,
+              "desc": {
+                "es": "Pechuga de pollo a la parrilla en mole oaxaqueño con chocolate, chiles tostados y especias, servido con arroz y tortillas.",
+                "en": "Grilled chicken breast in rich Oaxacan mole made with chocolate, toasted chiles, and spices, served with rice and tortillas."
+              }
+            },
+            {
+              "name": { "es": "Ribeye a la Parrilla", "en": "Ribeye a la Parrilla" },
+              "price": 33,
+              "star": true,
+              "desc": {
+                "es": "Ribeye a la parrilla terminado con mantequilla de ajo, servido con verduras asadas.",
+                "en": "Grilled ribeye finished with garlic butter, served with grilled vegetables."
+              }
+            },
+            {
+              "name": { "es": "Trompito Pastor Tacos", "en": "Trompito Pastor Tacos" },
+              "price": 25,
+              "star": true,
+              "desc": {
+                "es": "Cerdo marinado en achiote con piña asada, cebolla, jalapeño y pico de gallo.",
+                "en": "Achiote-marinated pork with grilled pineapple, onions, jalapeño, pico de gallo."
+              }
+            },
+            {
+              "name": { "es": "Chile Relleno", "en": "Chile Relleno" },
+              "price": 23,
+              "veg": true,
+              "desc": {
+                "es": "Poblano asado relleno de queso Oaxaca, bañado en salsa ranchera y servido con arroz y tortillas.",
+                "en": "Roasted poblano stuffed with Oaxaca cheese, smothered with ranchero sauce and served with rice and tortillas."
+              }
+            },
+            {
+              "name": { "es": "Chicken Fajitas", "en": "Chicken Fajitas" },
+              "price": 25,
+              "desc": {
+                "es": "Pollo a la parrilla con pimientos y cebolla, servido con arroz, frijoles, guacamole y tortillas.",
+                "en": "Grilled chicken with peppers and onions, served with rice, beans, guacamole, and tortillas."
+              }
+            },
+            {
+              "name": { "es": "Steak Fajitas", "en": "Steak Fajitas" },
+              "price": 29,
+              "desc": {
+                "es": "Res a la parrilla con pimientos y cebolla, servida con arroz, frijoles, guacamole y tortillas.",
+                "en": "Grilled steak with peppers and onions, served with rice, beans, guacamole, and tortillas."
+              }
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "casa",
+      "label": { "es": "Especialidades de la Casa", "en": "House Specialties" },
+      "note": { "es": "Los platillos que definen a Amara. Para compartir en mesa larga.", "en": "The dishes that define Amara. Made to share." },
+      "image": "molcajete",
+      "groups": [
+        {
+          "id": "casa-principal",
+          "label": { "es": "De la Casa", "en": "From the House" },
+          "items": [
+            {
+              "name": { "es": "Birria de Res Tradicional", "en": "Birria de Res Tradicional" },
+              "price": 28,
+              "desc": {
+                "es": "Birria de res cocinada lentamente con una mezcla de chiles y especias, servida en una olla tradicional con cebolla, cilantro, limón y tortillas hechas al momento.",
+                "en": "Slow-cooked beef birria in a blend of chiles and spices, served in a traditional clay pot with onion, cilantro, lime, and tortillas made to order."
+              }
+            },
+            {
+              "name": { "es": "Quesabirrias", "en": "Quesabirrias" },
+              "price": 17,
+              "desc": {
+                "es": "3 quesabirrias con cebolla, cilantro y salsa.",
+                "en": "Three quesabirrias with onion, cilantro, and salsa."
+              }
+            },
+            {
+              "name": { "es": "Queso Mochomo", "en": "Queso Mochomo" },
+              "price": 17,
+              "desc": {
+                "es": "Queso panela asado, bañado con salsa de molcajete y coronado con brisket dorado y crema fresca. Perfecto para compartir.",
+                "en": "Grilled panela cheese bathed in molcajete salsa and crowned with crisped brisket and crema fresca. Made for sharing."
+              }
+            },
+            {
+              "name": { "es": "Molcajete Mixto", "en": "Molcajete Mixto" },
+              "price": 46,
+              "star": true,
+              "desc": {
+                "es": "Molcajete caliente con una combinación de arrachera, pata de jaiba, queso asado, camarones con cabeza, pulpo, mejillones, callo de hacha, nopal y chile asado. Acompañado de tortillas calientes.",
+                "en": "A sizzling stone molcajete of arrachera, crab leg, grilled cheese, head-on shrimp, octopus, mussels, scallop, nopal, and roasted chile. Served with hot tortillas."
+              }
+            },
+            {
+              "name": { "es": "Carne en su Jugo", "en": "Carne en su Jugo" },
+              "price": 29,
+              "desc": {
+                "es": "Diezmillo de res, frijoles de la olla, tocino dorado, cebollitas cambray y chile caribe. Servida con queso fundido y guacamole.",
+                "en": "Beef chuck with pot beans, crisped bacon, spring onions, and chile caribe. Served with melted cheese and guacamole."
+              }
+            }
+          ]
+        },
+        {
+          "id": "casa-mar",
+          "label": { "es": "Del Mar", "en": "From the Sea" },
+          "image": "pulpo",
+          "items": [
+            {
+              "name": { "es": "Piña de Mariscos Gratinada", "en": "Piña de Mariscos Gratinada" },
+              "price": 33,
+              "desc": {
+                "es": "Media piña asada rellena con camarón, pulpo, tocino y champiñones salteados en una salsa cremosa de tomate y chiles rostizados, gratinada con queso Oaxaca.",
+                "en": "Half a roasted pineapple filled with shrimp, octopus, bacon, and mushrooms in a creamy tomato and roasted-chile sauce, gratinéed with Oaxaca cheese."
+              }
+            },
+            {
+              "name": { "es": "Camarones Colgados", "en": "Camarones Colgados" },
+              "price": 29,
+              "desc": {
+                "es": "Camarones rellenos de marlín con queso o jaiba con queso, envueltos en tocino y asados al carbón, suspendidos sobre una tabla de madera. Acompañados de papas gajo y tres salsas de la casa.",
+                "en": "Shrimp stuffed with marlin or crab and cheese, wrapped in bacon and charcoal-grilled, served hanging over a wooden board with potato wedges and three house salsas."
+              }
+            },
+            {
+              "name": { "es": "Pulpo Zarandeado", "en": "Pulpo Zarandeado" },
+              "price": 33,
+              "star": true,
+              "desc": {
+                "es": "Pulpo zarandeado a las brasas, acompañado de guacamole fresco, pico de gallo y limón.",
+                "en": "Fire-grilled zarandeado octopus with fresh guacamole, pico de gallo, and lime."
+              }
+            },
+            {
+              "name": { "es": "Aguachile de Mango Habanero", "en": "Aguachile de Mango Habanero" },
+              "price": 26,
+              "desc": {
+                "es": "Camarón curtido en limón en una salsa de mango y habanero con pepino, cebolla morada y aguacate.",
+                "en": "Lime-cured shrimp in a mango-habanero sauce with cucumber, red onion, and avocado."
+              }
+            },
+            {
+              "name": { "es": "Aguachile de Chiltepín Seco", "en": "Aguachile de Chiltepín Seco" },
+              "price": 26,
+              "desc": {
+                "es": "Camarón curtido en limón en una salsa roja de chiltepín seco con pepino, cebolla morada y aguacate.",
+                "en": "Lime-cured shrimp in a red dried-chiltepín sauce with cucumber, red onion, and avocado."
+              }
+            },
+            {
+              "name": { "es": "Botana de Callo de Acha", "en": "Botana de Callo de Acha" },
+              "price": 41,
+              "desc": {
+                "es": "Botana de callo de acha fresco con chile chiltepín quebrado, sal, pimienta y limón en una cama de pepino y cebolla morada.",
+                "en": "Fresh scallop botana with cracked chiltepín, salt, pepper, and lime over a bed of cucumber and red onion."
+              }
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "cena",
+      "label": { "es": "Cena", "en": "Dinner" },
+      "note": { "es": "Servida hasta las 9:00 pm", "en": "Served until 9:00 pm" },
+      "image": "tacos",
+      "groups": [
+        {
+          "id": "cena-entradas",
+          "label": { "es": "Entradas", "en": "Appetizers" },
+          "items": [
+            {
+              "name": { "es": "Guacamole de Ribeye y Chicharrón", "en": "Ribeye Chicharrón Guacamole" },
+              "price": 29,
+              "star": true,
+              "desc": {
+                "es": "Aguacate machacado coronado con trozos crujientes de ribeye, cotija y limón, servido con totopos de maíz.",
+                "en": "Fresh smashed avocado topped with crispy ribeye bites, cotija, lime, and served with corn chips."
+              }
+            },
+            {
+              "name": { "es": "Elote Mexicano", "en": "Elote Mexicano" },
+              "price": 13,
+              "veg": true,
+              "desc": {
+                "es": "Elote a la parrilla untado con crema de chipotle, queso cotija, tajín y cilantro.",
+                "en": "Grilled corn brushed with chipotle crema, cotija cheese, tajín, and cilantro."
+              }
+            },
+            {
+              "name": { "es": "Golden Tacos Dorados", "en": "Golden Tacos Dorados" },
+              "price": 15,
+              "desc": {
+                "es": "Tres tacos dorados de pollo deshebrado con salsa verde, crema, lechuga y queso fresco.",
+                "en": "Three crispy tacos with shredded chicken, topped with salsa verde, crema, lettuce, and queso fresco."
+              }
+            },
+            {
+              "name": { "es": "Guacamole y Totopos", "en": "Guacamole and Chips" },
+              "price": 15,
+              "veg": true,
+              "desc": {
+                "es": "Guacamole fresco con una porción generosa de totopos calientes hechos en casa.",
+                "en": "Fresh guacamole and a healthy portion of warm house-made chips."
+              }
+            },
+            {
+              "name": { "es": "Coliflor con Miel de Chipotle", "en": "Chipotle Honey Cauliflower Bites" },
+              "price": 15,
+              "veg": true,
+              "desc": {
+                "es": "Coliflor frita y crujiente bañada en miel de chipotle, servida con crema de limón.",
+                "en": "Crispy fried cauliflower tossed in chipotle honey, served with lime crema."
+              }
+            },
+            {
+              "name": { "es": "Ceviche de Camarón", "en": "Ceviche de Camarón" },
+              "price": 23,
+              "desc": {
+                "es": "Camarón fresco marinado en salsa negra y jugo de limón con jitomate, cebolla, cilantro, pepino y aguacate, servido con tostadas.",
+                "en": "Fresh shrimp marinated in salsa negra and lime juice with tomato, onion, cilantro, cucumber, and avocado, served with tostadas."
+              }
+            }
+          ]
+        },
+        {
+          "id": "cena-ensaladas",
+          "label": { "es": "Ensaladas", "en": "Salads" },
+          "items": [
+            {
+              "name": { "es": "Amara Salad", "en": "Amara Salad" },
+              "price": 20,
+              "star": true,
+              "desc": {
+                "es": "Servida en canasta de tortilla, con pollo a la parrilla, elote, frijol negro, pico de gallo, aguacate, queso fresco y aderezo de aguacate y cilantro.",
+                "en": "Served in a real taco shell with grilled chicken, corn, black beans, pico de gallo, avocado, queso fresco, and avocado-cilantro dressing."
+              }
+            },
+            {
+              "name": { "es": "Ensalada del Patrón", "en": "Ensalada del Patrón" },
+              "price": 27,
+              "desc": {
+                "es": "Arrachera a la parrilla, aguacate, verduras asadas, pepitas, queso fresco y vinagreta de cilantro y limón.",
+                "en": "Grilled arrachera, avocado, grilled veggies, pepitas, queso fresco, and cilantro-lime vinaigrette."
+              }
+            }
+          ]
+        },
+        {
+          "id": "cena-tradicional",
+          "label": { "es": "Tradicional", "en": "Traditional" },
+          "items": [
+            {
+              "name": { "es": "Enchiladas de Doña Aida", "en": "Enchiladas de Doña Aida" },
+              "price": 23,
+              "desc": {
+                "es": "Tres enchiladas de pollo con la salsa de tu elección: rojas, verdes, rancheras, mole o poblano cremoso, servidas con arroz y frijoles.",
+                "en": "Three chicken enchiladas with your choice of sauce: rojas, verdes, rancheras, mole, or creamy poblano, served with rice & beans."
+              }
+            },
+            {
+              "name": { "es": "Mole de Doña Ester", "en": "Mole de Doña Ester" },
+              "price": 27,
+              "star": true,
+              "desc": {
+                "es": "Pechuga de pollo a la parrilla en mole oaxaqueño con chocolate, chiles tostados y especias, servido con puré de papa.",
+                "en": "Grilled chicken breast in rich Oaxacan mole made with chocolate, toasted chiles, and spices, served with mashed potatoes."
+              }
+            },
+            {
+              "name": { "es": "Chile Relleno", "en": "Chile Relleno" },
+              "price": 23,
+              "veg": true,
+              "desc": {
+                "es": "Poblano asado relleno de queso Oaxaca, bañado en salsa ranchera y servido con arroz y tortillas.",
+                "en": "Roasted poblano stuffed with Oaxaca cheese, smothered with ranchero sauce and served with rice and tortillas."
+              }
+            }
+          ]
+        },
+        {
+          "id": "cena-tacos",
+          "label": { "es": "Tacos", "en": "Tacos" },
+          "note": {
+            "es": "3 por orden · no se combinan. Proteína a elegir, con col, aguacate, aioli de chipotle y salsa de mango.",
+            "en": "3 per order · no mix & match. A selection of protein, with coleslaw, avocado, chipotle aioli and mango sauce."
+          },
+          "items": [
+            {
+              "name": { "es": "Arrachera del Rancho", "en": "Arrachera del Rancho" },
+              "price": 20,
+              "desc": { "es": "Res deshebrada al estilo del rancho.", "en": "Braised beef, rancho style." }
+            },
+            {
+              "name": { "es": "Pescado", "en": "Fish" },
+              "price": 19,
+              "desc": { "es": "", "en": "" }
+            },
+            {
+              "name": { "es": "Camarón", "en": "Shrimp" },
+              "price": 25,
+              "desc": { "es": "", "en": "" }
+            },
+            {
+              "name": { "es": "Pollo", "en": "Chicken" },
+              "price": 20,
+              "desc": { "es": "", "en": "" }
+            },
+            {
+              "name": { "es": "Trompito Pastor", "en": "Trompito Pastor" },
+              "price": 25,
+              "star": true,
+              "desc": {
+                "es": "Cerdo marinado en achiote con piña asada, jalapeño, pico de gallo y salsa roja.",
+                "en": "Achiote-marinated pork with grilled pineapple, jalapeño, pico de gallo and salsa roja."
+              }
+            }
+          ]
+        },
+        {
+          "id": "cena-parrilla",
+          "label": { "es": "De la Parrilla", "en": "Del Grill" },
+          "items": [
+            {
+              "name": { "es": "Ribeye a la Parrilla", "en": "Ribeye a la Parrilla" },
+              "price": 33,
+              "star": true,
+              "desc": {
+                "es": "Ribeye a la parrilla terminado con mantequilla de ajo, servido con verduras asadas y tortillas.",
+                "en": "Grilled ribeye finished with garlic butter, served with grilled vegetables and tortillas."
+              }
+            },
+            {
+              "name": { "es": "Amara Cheeseburger", "en": "Amara Cheeseburger" },
+              "price": 22,
+              "desc": {
+                "es": "Carne de 8 oz en pan brioche con queso cheddar, aioli de chipotle, lechuga, jitomate y cebolla.",
+                "en": "8 oz patty in a brioche bun with cheddar cheese, chipotle aioli, lettuce, tomato and onions."
+              }
+            },
+            {
+              "name": { "es": "Carne Tampiqueña", "en": "Carne Tampiqueña" },
+              "price": 33,
+              "desc": {
+                "es": "Arrachera a la parrilla con enchilada de queso, arroz, frijoles y cebolla asada.",
+                "en": "Grilled arrachera with cheese enchilada, rice, beans, and grilled onion."
+              }
+            }
+          ]
+        },
+        {
+          "id": "cena-fajitas",
+          "label": { "es": "Fajitas", "en": "Fajitas" },
+          "note": {
+            "es": "Servidas con arroz, frijoles, guacamole y tortillas.",
+            "en": "Served with rice, beans, guacamole, and tortillas."
+          },
+          "items": [
+            {
+              "name": { "es": "Fajitas de Pollo", "en": "Chicken Fajitas" },
+              "price": 27,
+              "desc": { "es": "Pollo a la parrilla con pimientos y cebolla.", "en": "Grilled chicken with peppers and onions." }
+            },
+            {
+              "name": { "es": "Fajitas de Res", "en": "Steak Fajitas" },
+              "price": 29,
+              "desc": { "es": "Res a la parrilla con pimientos y cebolla.", "en": "Grilled steak with peppers and onions." }
+            },
+            {
+              "name": { "es": "Fajitas de Camarón", "en": "Shrimp Fajitas" },
+              "price": 29,
+              "desc": { "es": "Camarón salteado al ajo con pimientos y cebolla.", "en": "Garlic sautéed shrimp with peppers and onions." }
+            },
+            {
+              "name": { "es": "Fajitas Mixtas", "en": "Mixed Fajitas" },
+              "price": 33,
+              "star": true,
+              "desc": { "es": "Pollo, res y camarón con pimientos y cebolla.", "en": "Chicken, steak, and shrimp with peppers and onions." }
+            },
+            {
+              "name": { "es": "Fajitas Vegetarianas", "en": "Veggie Fajitas" },
+              "price": 25,
+              "veg": true,
+              "desc": {
+                "es": "Verduras frescas surtidas: jitomate, coliflor, pimiento, calabacita, calabaza y cebolla.",
+                "en": "Assorted fresh vegetables: tomato, cauliflower, bell peppers, zucchini, squash, onions."
+              }
+            }
+          ]
+        },
+        {
+          "id": "cena-salmon-sushi",
+          "label": { "es": "Salmón y Sushi", "en": "Salmon & Sushi" },
+          "items": [
+            {
+              "name": { "es": "Grilled Salmon Plate", "en": "Grilled Salmon Plate" },
+              "price": 29,
+              "desc": {
+                "es": "Filete de salmón a la parrilla servido con verduras de temporada y arroz.",
+                "en": "Salmon filet grilled and served with seasonal vegetables and rice."
+              }
+            },
+            {
+              "name": { "es": "Salmon Sushi Roll", "en": "Salmon Sushi Roll" },
+              "price": 25,
+              "desc": { "es": "Aguacate, pepino y queso crema.", "en": "Avocado, cucumber, and cream cheese." }
+            },
+            {
+              "name": { "es": "559 Sushi", "en": "559 Sushi" },
+              "price": 23,
+              "desc": {
+                "es": "Arroz, queso crema, aguacate, pepino, camarón y surimi.",
+                "en": "Rice, cream cheese, avocado, cucumber, shrimp and crabmeat (imitation)."
+              }
+            },
+            {
+              "name": { "es": "California Roll", "en": "California Roll" },
+              "price": 19,
+              "desc": {
+                "es": "Aguacate, pepino, alga nori, surimi y ajonjolí.",
+                "en": "Avocado, cucumber, nori seaweed, crab (imitation), and sesame seeds."
+              }
+            },
+            {
+              "name": { "es": "Amara's Sushi", "en": "Amara's Sushi" },
+              "price": 29,
+              "star": true,
+              "desc": {
+                "es": "Arroz, queso Philadelphia, aguacate, pepino, camarón, surimi y una porción de ceviche.",
+                "en": "Rice, Philadelphia cheese, avocado, cucumber, shrimp, crab (imitation) and a side of ceviche."
+              }
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "postres",
+      "label": { "es": "Postres", "en": "Desserts" },
+      "note": { "es": "Todos a $10", "en": "All $10" },
+      "image": null,
+      "groups": [
+        {
+          "id": "postres-todos",
+          "label": { "es": "Para Cerrar", "en": "To Finish" },
+          "items": [
+            {
+              "name": { "es": "Churro Sundae", "en": "Churro Sundae" },
+              "price": 10,
+              "star": true,
+              "desc": {
+                "es": "Churros calientes de canela, helado de vainilla, salsa de chocolate y dulce de leche.",
+                "en": "Warm cinnamon churros, vanilla ice cream, chocolate sauce, and dulce de leche."
+              }
+            },
+            {
+              "name": { "es": "Cheesecake", "en": "Cheesecake" },
+              "price": 10,
+              "desc": {
+                "es": "Cheesecake cremoso con crema batida, compota de berries y berries frescos.",
+                "en": "Creamy cheesecake with whipped cream, berry compote, and fresh berries."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
