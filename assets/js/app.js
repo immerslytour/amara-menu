@@ -145,7 +145,7 @@ function renderMenu() {
     root.appendChild(sec);
   });
 
-  renderFeatured();
+  try { renderFeatured(); } catch (e) { console.error('carrusel:', e); }
   observeReveals();
   observeSections();
   syncTally();
@@ -427,7 +427,8 @@ function observeSections() {
 
   /* data */
   try {
-    const res = await fetch("assets/data/menu.json");
+    const v = window.ASSET_V ? "?v=" + window.ASSET_V : "";
+    const res = await fetch("assets/data/menu.json" + v);
     DATA = await res.json();
     applyLang();
   } catch (err) {

@@ -144,3 +144,23 @@ correcto:
 También en el menú impreso: *"RibeyeChicharrón"*, *"chickenenchiladas"* y
 *"Amaras"* / *"Amara's"* aparecen sin espacio o inconsistentes. Ya quedaron
 corregidos aquí.
+
+---
+
+## Importante: versionado de archivos (caché)
+
+`index.html` carga el CSS y el JS con `?v=FECHA`:
+
+```html
+<link rel="stylesheet" href="assets/css/style.css?v=20260826d">
+<script>window.ASSET_V="20260826d";</script>
+<script src="assets/js/app.js?v=20260826d"></script>
+```
+
+**Cada vez que edites `style.css`, `app.js` o `menu.json`, sube esa versión**
+(los tres lugares tienen que coincidir). Sin eso, los navegadores que ya
+visitaron el sitio siguen usando los archivos viejos en caché y no ven el
+cambio — o peor, mezclan HTML nuevo con JavaScript viejo y algo deja de
+funcionar.
+
+Si cambias solo `menu.json` (precios, platillos), sube igual la versión.
