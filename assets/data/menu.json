@@ -13,8 +13,8 @@
     "phone": "+15592933714",
     "phoneDisplay": "(559) 293-3714",
     "hours": {
-      "es": "Todos los días · 9:00 am – 9:00 pm",
-      "en": "Every day · 9:00 am – 9:00 pm"
+      "es": "Lun–Jue · 9:30 am – 9:00 pm  ·  Vie–Dom · 9:30 am – 12:00 am",
+      "en": "Mon–Thu · 9:30 am – 9:00 pm  ·  Fri–Sun · 9:30 am – 12:00 am"
     },
     "instagram": "https://www.instagram.com/amara.fresno/",
     "yelp": "https://www.yelp.com/biz/amara-fresno",
@@ -28,8 +28,8 @@
         "en": "Brunch"
       },
       "note": {
-        "es": "Servido todos los días desde las 9:00 am",
-        "en": "Served daily from 9:00 am"
+        "es": "Servido todos los días desde las 9:30 am",
+        "en": "Served every day from 9:30 am"
       },
       "image": null,
       "groups": [

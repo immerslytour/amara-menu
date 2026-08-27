@@ -23,7 +23,7 @@ const IMAGES = {
 const COPY = {
   es: {
     call: "Llamar", eyebrow: "Fresno, California", tagline: "Cocina Mexicana Moderna",
-    hours: "Todos los días · 9:00 am – 9:00 pm", hoursLong: "Lunes a domingo<br>9:00 am – 9:00 pm",
+    hours: "Lun–Jue 9:30am–9pm · Vie–Dom 9:30am–12am", hoursLong: "Lun–Jue · 9:30 am – 9:00 pm<br>Vie–Dom · 9:30 am – 12:00 am",
     scroll: "El menú", loading: "Cargando el menú…",
     visitKicker: "Te esperamos", visitTitle: "Visítanos",
     lblAddress: "Dirección", lblHours: "Horario", lblPhone: "Teléfono",
@@ -41,7 +41,7 @@ const COPY = {
   },
   en: {
     call: "Call", eyebrow: "Fresno, California", tagline: "Modern Mexican Cuisine",
-    hours: "Every day · 9:00 am – 9:00 pm", hoursLong: "Monday to Sunday<br>9:00 am – 9:00 pm",
+    hours: "Mon–Thu 9:30am–9pm · Fri–Sun 9:30am–12am", hoursLong: "Mon–Thu · 9:30 am – 9:00 pm<br>Fri–Sun · 9:30 am – 12:00 am",
     scroll: "The menu", loading: "Loading the menu…",
     visitKicker: "Come see us", visitTitle: "Visit",
     lblAddress: "Address", lblHours: "Hours", lblPhone: "Phone",

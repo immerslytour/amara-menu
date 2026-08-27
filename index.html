@@ -4,19 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Amara · Cocina Mexicana Moderna · Fresno, CA</title>
-<meta name="description" content="Menú de Amara — cocina mexicana moderna en 3874 N Blackstone Ave, Fresno. Brunch, especialidades de la casa, mariscos y cena. Abierto todos los días de 9am a 9pm.">
+<meta name="description" content="Menú de Amara — cocina mexicana moderna en 3874 N Blackstone Ave, Fresno. Brunch, especialidades de la casa, mariscos y cena. Abierto lunes a jueves 9:30am–9pm, viernes a domingo 9:30am–12am.">
 <meta name="theme-color" content="#0B110E">
 
 <meta property="og:type" content="restaurant">
 <meta property="og:title" content="Amara · Cocina Mexicana Moderna">
-<meta property="og:description" content="Brunch, mariscos y cena en el corazón de Fresno. Abierto todos los días 9am–9pm.">
+<meta property="og:description" content="Brunch, mariscos y cena en el corazón de Fresno. Lun–Jue 9:30am–9pm · Vie–Dom 9:30am–12am.">
 <meta property="og:image" content="assets/img/hero.png">
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..600&family=EB+Garamond:ital,wght@0,400..700;1,400..600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=20260826d">
+<link rel="stylesheet" href="assets/css/style.css?v=20260826e">
 
 <script type="application/ld+json">
 {
@@ -34,12 +34,14 @@
     "postalCode": "93726",
     "addressCountry": "US"
   },
-  "openingHoursSpecification": [{
-    "@type": "OpeningHoursSpecification",
-    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
-    "opens": "09:00",
-    "closes": "21:00"
-  }],
+  "openingHoursSpecification": [
+    {"@type":"OpeningHoursSpecification",
+     "dayOfWeek":["Monday","Tuesday","Wednesday","Thursday"],
+     "opens":"09:30","closes":"21:00"},
+    {"@type":"OpeningHoursSpecification",
+     "dayOfWeek":["Friday","Saturday","Sunday"],
+     "opens":"09:30","closes":"24:00"}
+  ],
   "sameAs": ["https://www.instagram.com/amara.fresno/", "https://www.yelp.com/biz/amara-fresno"]
 }
 </script>
@@ -102,7 +104,7 @@
     <div class="rule rule-diamond"></div>
     <p class="hero-sub" data-i18n="tagline">Cocina Mexicana Moderna</p>
     <div class="hero-facts">
-      <span data-i18n="hours">Todos los días · 9:00 am – 9:00 pm</span>
+      <span data-i18n="hours">Lun–Jue 9:30am–9pm · Vie–Dom 9:30am–12am</span>
       <a href="https://maps.google.com/?q=3874+N+Blackstone+Ave+Fresno+CA+93726" target="_blank" rel="noopener">3874 N Blackstone Ave</a>
       <a href="tel:+15592933714">(559) 293-3714</a>
     </div>
@@ -149,7 +151,7 @@
     </div>
     <div class="visit-cell">
       <h4 data-i18n="lblHours">Horario</h4>
-      <p data-i18n="hoursLong">Lunes a domingo<br>9:00 am – 9:00 pm</p>
+      <p data-i18n="hoursLong">Lun–Jue · 9:30 am – 9:00 pm<br>Vie–Dom · 9:30 am – 12:00 am</p>
     </div>
     <div class="visit-cell">
       <h4 data-i18n="lblPhone">Teléfono</h4>
@@ -201,7 +203,7 @@
   </div>
 </aside>
 
-<script>window.ASSET_V="20260826d";</script>
-<script src="assets/js/app.js?v=20260826d"></script>
+<script>window.ASSET_V="20260826e";</script>
+<script src="assets/js/app.js?v=20260826e"></script>
 </body>
 </html>
