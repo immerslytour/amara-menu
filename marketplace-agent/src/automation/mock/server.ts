@@ -59,6 +59,8 @@ export function createServer(): http.Server {
       if (typeof body.verificationRequired === 'boolean')
         state.verificationRequired = body.verificationRequired;
       if (typeof body.breakCreateFlow === 'boolean') state.breakCreateFlow = body.breakCreateFlow;
+      if (typeof body.hideInboxListingId === 'boolean')
+        state.hideInboxListingId = body.hideInboxListingId;
       save(state);
       return json(res, { ok: true });
     }
@@ -105,11 +107,21 @@ export function createServer(): http.Server {
         category: String(body.category || 'Other'),
         location: String(body.location || ''),
         photos: Array.isArray(body.photos) ? body.photos : [],
+        sold: false,
         createdAt: new Date().toISOString(),
       };
       state.listings.push(listing);
       save(state);
       return json(res, { id: listing.id });
+    }
+
+    const soldMatch = p.match(/^\/mock\/api\/listings\/([^/]+)\/sold$/);
+    if (soldMatch && req.method === 'POST') {
+      const l = state.listings.find((x) => x.id === soldMatch[1]);
+      if (!l) return json(res, { error: 'not found' }, 404);
+      l.sold = true;
+      save(state);
+      return json(res, { ok: true });
     }
 
     const sendMatch = p.match(/^\/mock\/api\/threads\/([^/]+)\/send$/);
@@ -142,7 +154,7 @@ export function createServer(): http.Server {
     }
 
     if (p === '/messages') {
-      return html(res, pages.inboxPage([...state.threads].reverse()));
+      return html(res, pages.inboxPage([...state.threads].reverse(), state.hideInboxListingId));
     }
     const threadMatch = p.match(/^\/messages\/t\/([^/]+)$/);
     if (threadMatch) {

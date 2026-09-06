@@ -99,6 +99,32 @@ export const INBOX = {
   threadListingLink: 'a[href*="/marketplace/item/"]',
 };
 
+/** "Your listings" management page (used to mark an item sold). */
+export const SELLING = {
+  listingLink: 'a[href*="/marketplace/item/"]',
+  rowMenuButton: [
+    { role: 'button' as const, name: /more options/i },
+    { role: 'button' as const, name: /^actions$/i },
+    { role: 'button' as const, name: /^menu$/i },
+  ],
+  markAsSoldItem: [
+    { role: 'menuitem' as const, name: /mark as sold/i },
+    { role: 'button' as const, name: /mark as sold/i },
+  ],
+  confirmSold: [
+    { role: 'button' as const, name: /^(mark as sold|confirm|done|ok)$/i },
+  ],
+  soldProbe: /\bsold\b/i,
+};
+
+/** How far the agent will lazily load a list before giving up. Bounded on purpose. */
+export const SCROLL = {
+  inboxRounds: 6,
+  threadRounds: 8,
+  pauseMs: 900,
+  maxConversations: 40,
+};
+
 export const LISTING_PAGE = {
   titleHeading: ['h1', '[role="main"] h1', 'span[dir="auto"] h1'],
   priceProbe: /\$\s?\d[\d,.]*/,

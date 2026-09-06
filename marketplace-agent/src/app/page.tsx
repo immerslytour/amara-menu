@@ -3,20 +3,25 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { post, useAppState, type ConversationView } from '@/lib/useAppState';
+import { useHotLeadAlerts } from '@/lib/useHotLeadAlerts';
 import { Badge, Button, Card, Empty, LinkButton, SectionTitle, Stat, clock } from '@/components/ui';
 
 export default function Dashboard() {
   const { state, refresh } = useAppState();
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [note, setNote] = useState<string | null>(null);
+  const alerts = useHotLeadAlerts(state?.hotLeads);
 
   if (!state) return <p className="text-slate-500">Loading…</p>;
 
   async function act(conversationId: string, action: string) {
     setBusy(conversationId + action);
     setError(null);
+    setNote(null);
     try {
-      await post(`/api/conversations/${conversationId}/action`, { action });
+      const res = await post(`/api/conversations/${conversationId}/action`, { action });
+      if (res?.note) setNote(res.note);
       await refresh();
     } catch (err) {
       setError((err as Error).message);
@@ -38,9 +43,22 @@ export default function Dashboard() {
       {error && (
         <p className="rounded border border-rose-800 bg-rose-900/30 px-3 py-2 text-sm text-rose-200">{error}</p>
       )}
+      {note && (
+        <p className="rounded border border-amber-800 bg-amber-900/20 px-3 py-2 text-sm text-amber-200">{note}</p>
+      )}
 
       <section>
-        <SectionTitle>HOT LEADS</SectionTitle>
+        <div className="mb-3 flex items-center justify-between">
+          <SectionTitle>HOT LEADS</SectionTitle>
+          {alerts.permission === 'default' && (
+            <button
+              onClick={alerts.requestPermission}
+              className="text-xs text-sky-400 underline hover:text-sky-300"
+            >
+              Notify me when a buyer is ready to close
+            </button>
+          )}
+        </div>
         {state.hotLeads.length === 0 ? (
           <Empty>No hot leads yet.</Empty>
         ) : (

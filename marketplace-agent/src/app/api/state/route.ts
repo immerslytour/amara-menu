@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import * as repo from '@/db/repo';
+import { workerIsAlive } from '@/lib/agentState';
 
 export const dynamic = 'force-dynamic';
 
@@ -30,13 +31,7 @@ export async function GET() {
   const hotLeads = conversationViews.filter((c) => c.status === 'HOT_LEAD');
 
   return NextResponse.json({
-    agent: {
-      ...agent,
-      workerAlive:
-        agent.workerAlive &&
-        !!agent.heartbeatAt &&
-        Date.now() - new Date(agent.heartbeatAt).getTime() < 20000,
-    },
+    agent: { ...agent, workerAlive: workerIsAlive() },
     stats: {
       totalProducts: products.length,
       activeListings: listings.filter((l) => l.status === 'ACTIVE').length,

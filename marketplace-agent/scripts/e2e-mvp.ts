@@ -263,15 +263,26 @@ async function main() {
     console.log('[e2e] STEP 15-18: buyer meets the minimum, conversation becomes HOT_LEAD');
     await buyerSays(listingId, 'John', 'I can pay $400. Can I pick it up tonight?');
     await checkMessages();
+    /**
+     * The handoff is complete only when the AI has switched itself off AND its
+     * closing reply is the last message in the thread. Waiting on the status
+     * alone raced the reply that Claude was still writing.
+     */
     const hot = await waitForConversation('the HOT_LEAD handoff', (c, msgs) =>
-      c.status === 'HOT_LEAD' ? { c, msgs } : null,
+      c.status === 'HOT_LEAD' && c.aiEnabled === false && msgs[msgs.length - 1]?.sender === 'AGENT'
+        ? { c, msgs }
+        : null,
     );
     const acceptText: string = hot.msgs.filter((m: any) => m.sender === 'AGENT').slice(-1)[0].text;
     console.log(`       AI: ${acceptText}`);
     check('conversation is HOT_LEAD', hot.c.status === 'HOT_LEAD');
     check('lead score is in the 81-100 band', hot.c.leadScore >= 81, String(hot.c.leadScore));
     check('agreed price is recorded at $400', hot.c.agreedPrice === 400, String(hot.c.agreedPrice));
-    check('AI defers the pickup address to the human', /confirm the pickup details/i.test(acceptText));
+    // Asserted on meaning, not on one exact sentence: Claude words this
+    // differently each run, and the rule is "a human settles the pickup".
+    const promisesHumanFollowUp =
+      /\b(seller|i)\b[^.!?]*\b(confirm|arrange|sort out|work out|set up)\b[^.!?]*\b(pickup|pick-up|spot|details|meet|meeting|location)\b/i;
+    check('AI defers the pickup arrangements to the human', promisesHumanFollowUp.test(acceptText), acceptText);
     check('AI never gave out an exact address', !/\b\d{1,5}\s+[A-Z][a-z]+\s+(st|street|ave|rd|road|dr|drive)\b/i.test(acceptText));
     check('AI switched itself off for this conversation', hot.c.aiEnabled === false);
     check('conversation is flagged for human takeover', hot.c.humanTakeover === true);
@@ -304,6 +315,11 @@ async function main() {
 
     // ----------------------------------------------------------- STEP 20
     console.log('[e2e] STEP 20: human marks it sold');
+    const liveBefore = (await (await fetch(`${MOCK}/mock/api/state`)).json()).listings.find(
+      (l: any) => l.id === listingId,
+    );
+    check('the listing is still live on the marketplace before selling', liveBefore.sold === false);
+
     await api(`/api/conversations/${conversationId}/action`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
@@ -313,6 +329,50 @@ async function main() {
     const soldProduct = finalState.products.find((p: any) => p.id === productId);
     check('product is marked SOLD', soldProduct.status === 'SOLD', soldProduct.status);
     check('sales counter is 1', finalState.stats.sales === 1);
+
+    // Selling must take the listing down on the platform, not just here.
+    const takenDown = await waitFor(
+      'the marketplace listing to be marked sold',
+      async () => {
+        const live = (await (await fetch(`${MOCK}/mock/api/state`)).json()).listings.find(
+          (l: any) => l.id === listingId,
+        );
+        return live?.sold ? live : null;
+      },
+      60000,
+    );
+    check('the marketplace listing itself is marked sold', takenDown.sold === true);
+    check(
+      'the local listing record follows',
+      (await api(`/api/products/${productId}`)).listing.status === 'SOLD',
+    );
+
+    console.log('[e2e] STEP 21: editing and deleting a product');
+    const edited = await api(`/api/products/${productId}`, {
+      method: 'PATCH',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ askingPrice: 460, minimumPrice: 410, pickupArea: 'South Austin, TX' }),
+    });
+    check('product edits are saved', edited.product.askingPrice === 460 && edited.product.pickupArea === 'South Austin, TX');
+
+    const badEdit = await fetch(`${APP}/api/products/${productId}`, {
+      method: 'PATCH',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ askingPrice: 100, minimumPrice: 900 }),
+    });
+    check('a minimum above the asking price is rejected', badEdit.status === 400);
+    check(
+      'the rejected edit changed nothing',
+      (await api(`/api/products/${productId}`)).product.askingPrice === 460,
+    );
+
+    const scratch = await api('/api/products', { method: 'POST', body: throwawayForm() });
+    const deleted = await fetch(`${APP}/api/products/${scratch.product.id}`, { method: 'DELETE' });
+    check('an unpublished product can be deleted', deleted.ok);
+    check(
+      'it is gone from the dashboard',
+      !(await api('/api/state')).products.some((p: any) => p.id === scratch.product.id),
+    );
 
     // ------------------------------------------------------- event log
     console.log('\n[e2e] EVENT LOG (most recent last)');
@@ -340,6 +400,19 @@ async function main() {
   process.exit(failures === 0 ? 0 : 1);
 
   /* ------------------------------------------------------------ helpers */
+
+  function throwawayForm(): FormData {
+    const f = new FormData();
+    f.set('title', 'Old Desk Lamp');
+    f.set('description', 'Works fine.');
+    f.set('askingPrice', '20');
+    f.set('minimumPrice', '15');
+    f.set('pickupArea', 'North Austin, TX');
+    f.set('availability', 'weekends');
+    f.set('category', 'Home Goods');
+    f.set('condition', 'Used - good');
+    return f;
+  }
 
   async function buyerSays(listingId: string, buyerName: string, text: string) {
     console.log(`       ${buyerName}: ${text}`);

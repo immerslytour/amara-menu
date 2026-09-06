@@ -13,11 +13,14 @@
     "typecheck": "tsc --noEmit",
     "db:reset": "tsx scripts/reset-db.ts",
     "simulate-buyer": "tsx scripts/simulate-buyer.ts",
-    "test": "npm run test:rules && npm run test:facebook && npm run test:recovery",
+    "test": "npm run test:rules && npm run test:facebook && npm run test:recovery && npm run test:linking && npm run test:auth",
     "test:rules": "tsx scripts/test-rules.ts",
     "test:facebook": "tsx scripts/test-facebook-detection.ts",
     "test:recovery": "tsx scripts/test-failure-recovery.ts",
-    "test:ui": "tsx scripts/test-ui.ts"
+    "test:ui": "tsx scripts/test-ui.ts",
+    "test:linking": "tsx scripts/test-linking-and-sold.ts",
+    "test:claude": "tsx scripts/test-claude-live.ts",
+    "test:auth": "tsx scripts/test-auth.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.124.0",

@@ -5,6 +5,8 @@ import { useState } from 'react';
 import { Button, Card, SectionTitle } from '@/components/ui';
 
 const CATEGORIES = ['Electronics', 'Home Goods', 'Furniture', 'Clothing', 'Sporting Goods', 'Other'];
+// Facebook's own condition values - it requires one for "Item for sale".
+const CONDITIONS = ['New', 'Used - like new', 'Used - good', 'Used - fair'];
 
 export default function NewProductPage() {
   const router = useRouter();
@@ -64,13 +66,22 @@ export default function NewProductPage() {
           <Field label="Availability (optional)">
             <input name="availability" className={input} placeholder="Weekday evenings and weekends" />
           </Field>
-          <Field label="Category">
-            <select name="category" className={input} defaultValue="Electronics">
-              {CATEGORIES.map((c) => (
-                <option key={c}>{c}</option>
-              ))}
-            </select>
-          </Field>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field label="Category">
+              <select name="category" className={input} defaultValue="Electronics">
+                {CATEGORIES.map((c) => (
+                  <option key={c}>{c}</option>
+                ))}
+              </select>
+            </Field>
+            <Field label="Condition">
+              <select name="condition" className={input} defaultValue="Used - good">
+                {CONDITIONS.map((c) => (
+                  <option key={c}>{c}</option>
+                ))}
+              </select>
+            </Field>
+          </div>
 
           {errors.length > 0 && (
             <ul className="rounded border border-rose-800 bg-rose-900/30 px-3 py-2 text-sm text-rose-200">

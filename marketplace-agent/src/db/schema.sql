@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS products (
   pickupArea    TEXT NOT NULL DEFAULT '',
   availability  TEXT NOT NULL DEFAULT '',
   category      TEXT NOT NULL DEFAULT 'Electronics',
+  condition     TEXT NOT NULL DEFAULT 'Used - good',
   status        TEXT NOT NULL DEFAULT 'DRAFT',
   aiEnabled     INTEGER NOT NULL DEFAULT 1,
   generatedTitle       TEXT,

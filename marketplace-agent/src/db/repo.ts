@@ -43,6 +43,7 @@ export interface CreateProductInput {
   pickupArea: string;
   availability: string;
   category?: string;
+  condition?: string;
 }
 
 export function createProduct(input: CreateProductInput): Product {
@@ -51,9 +52,9 @@ export function createProduct(input: CreateProductInput): Product {
   db()
     .prepare(
       `INSERT INTO products (id, userId, title, description, photos, askingPrice, minimumPrice,
-        pickupArea, availability, category, status, aiEnabled, createdAt, updatedAt)
+        pickupArea, availability, category, condition, status, aiEnabled, createdAt, updatedAt)
        VALUES (@id, 'local-user', @title, @description, @photos, @askingPrice, @minimumPrice,
-        @pickupArea, @availability, @category, 'DRAFT', 1, @ts, @ts)`,
+        @pickupArea, @availability, @category, @condition, 'DRAFT', 1, @ts, @ts)`,
     )
     .run({
       id: pid,
@@ -65,6 +66,7 @@ export function createProduct(input: CreateProductInput): Product {
       pickupArea: input.pickupArea,
       availability: input.availability,
       category: input.category || 'Electronics',
+      condition: input.condition || 'Used - good',
       ts,
     });
   return getProduct(pid)!;
@@ -90,6 +92,7 @@ export function updateProduct(pid: string, patch: Partial<Product>): Product | n
     'pickupArea',
     'availability',
     'category',
+    'condition',
     'status',
     'generatedTitle',
     'generatedDescription',
@@ -116,6 +119,13 @@ export function updateProduct(pid: string, patch: Partial<Product>): Product | n
     .prepare(`UPDATE products SET ${sets.join(', ')}, updatedAt = @updatedAt WHERE id = @id`)
     .run(params);
   return getProduct(pid);
+}
+
+export function deleteProduct(pid: string): void {
+  // Conversations keep their history; they just lose the product link.
+  db().prepare('UPDATE conversations SET productId = NULL WHERE productId = ?').run(pid);
+  db().prepare('DELETE FROM listings WHERE productId = ?').run(pid);
+  db().prepare('DELETE FROM products WHERE id = ?').run(pid);
 }
 
 export function setProductStatus(pid: string, status: ProductStatus): void {
@@ -228,6 +238,13 @@ export function upsertConversation(input: {
 
 export function getConversation(cid: string): Conversation | null {
   const r = db().prepare('SELECT * FROM conversations WHERE id = ?').get(cid) as Row | undefined;
+  return r ? toConversation(r) : null;
+}
+
+export function findConversationByExternalId(platform: Platform, externalId: string): Conversation | null {
+  const r = db()
+    .prepare('SELECT * FROM conversations WHERE platform = ? AND externalId = ?')
+    .get(platform, externalId) as Row | undefined;
   return r ? toConversation(r) : null;
 }
 

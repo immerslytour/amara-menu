@@ -6,6 +6,7 @@ export interface ListingInput {
   description: string;
   price: number;
   category: string;
+  condition: string;
   location: string;
   photoPaths: string[];
 }
@@ -79,10 +80,31 @@ export interface MarketplaceAdapter {
   publishListing(input: ListingInput): Promise<PublishResult>;
   verifyListing(ref: { externalId?: string | null; externalUrl?: string | null; title: string }): Promise<ListingVerification>;
 
+  /**
+   * Marks a published listing as sold on the platform itself, so it stops
+   * attracting new buyers. Returns verified:false if the platform did not
+   * visibly confirm it.
+   */
+  markListingSold(ref: { externalId?: string | null; externalUrl?: string | null; title: string }): Promise<SoldResult>;
+
   fetchConversations(): Promise<ConversationSnapshot[]>;
   fetchMessages(conversationExternalId: string): Promise<MessageSnapshot[]>;
   sendMessage(conversationExternalId: string, text: string): Promise<SendResult>;
   openConversation(conversationExternalId: string): Promise<void>;
+
+  /**
+   * Which listing a thread is about, read from inside the thread itself.
+   * Inbox rows often do not carry the listing id, so this is how a
+   * conversation gets attached to the right product.
+   */
+  getConversationListingId(conversationExternalId: string): Promise<string | null>;
+}
+
+export interface SoldResult {
+  ok: boolean;
+  /** The adapter re-read the listing and saw it marked sold. */
+  verified: boolean;
+  detail?: string;
 }
 
 export type AutomationErrorCode =
@@ -92,6 +114,7 @@ export type AutomationErrorCode =
   | 'VERIFICATION_REQUIRED'
   | 'PUBLISH_NOT_VERIFIED'
   | 'SEND_NOT_VERIFIED'
+  | 'SOLD_NOT_VERIFIED'
   | 'NAVIGATION_FAILED'
   | 'BROWSER_NOT_STARTED';
 

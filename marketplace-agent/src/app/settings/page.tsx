@@ -1,10 +1,12 @@
 'use client';
 
 import { useAppState } from '@/lib/useAppState';
-import { Card, SectionTitle } from '@/components/ui';
+import { useHotLeadAlerts } from '@/lib/useHotLeadAlerts';
+import { Button, Card, SectionTitle } from '@/components/ui';
 
 export default function SettingsPage() {
   const { state } = useAppState(5000);
+  const alerts = useHotLeadAlerts(state?.hotLeads);
 
   return (
     <div className="max-w-3xl space-y-6">
@@ -34,6 +36,38 @@ npm run mock-agent`}
           <li>• Delete that folder to sign out and forget the session.</li>
           <li>• CAPTCHAs, MFA and security checks are never bypassed — the agent pauses and asks you.</li>
         </ul>
+      </Card>
+
+      <Card>
+        <h3 className="font-semibold text-white">Notifications</h3>
+        <p className="mt-1 text-sm text-slate-300">
+          Get a desktop notification and a chime the moment a buyer becomes a hot lead, so you do not
+          have to watch the dashboard.
+        </p>
+        <p className="mt-2 text-sm text-slate-400">
+          Status:{' '}
+          {alerts.permission === 'granted'
+            ? 'on'
+            : alerts.permission === 'denied'
+              ? 'blocked by your browser — allow notifications for this site in its settings'
+              : alerts.permission === 'unsupported'
+                ? 'this browser does not support notifications'
+                : 'not enabled yet'}
+        </p>
+        {alerts.permission === 'default' && (
+          <div className="mt-3">
+            <Button onClick={alerts.requestPermission}>Enable notifications</Button>
+          </div>
+        )}
+      </Card>
+
+      <Card>
+        <h3 className="font-semibold text-white">Dashboard access</h3>
+        <p className="mt-1 text-sm text-slate-300">
+          The agent can act as you on Marketplace, so do not expose this app beyond your machine
+          without a token. Set <code>DASHBOARD_TOKEN</code> in <code>.env</code> and every page and
+          API call requires it (entered once at <code>/unlock</code>).
+        </p>
       </Card>
 
       <Card>

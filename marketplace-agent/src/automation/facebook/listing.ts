@@ -1,9 +1,9 @@
 import type { Page } from 'playwright';
-import { LISTING_FORM, LISTING_PAGE, URLS } from './selectors';
-import { firstAttachedCss, firstVisible } from './locators';
+import { LISTING_FORM, LISTING_PAGE, SELLING, URLS } from './selectors';
+import { firstAttachedCss, firstVisible, firstVisibleIn } from './locators';
 import { captureFailure } from '../diagnostics';
 import { goto, openCreateItem } from './navigation';
-import type { ListingInput, ListingVerification, PublishResult } from '../MarketplaceAdapter';
+import type { ListingInput, ListingVerification, PublishResult, SoldResult } from '../MarketplaceAdapter';
 
 /**
  * Creating and verifying a Marketplace listing through the normal website UI.
@@ -67,6 +67,27 @@ export async function publishListing(page: Page, input: ListingInput): Promise<P
         'UNEXPECTED_UI',
         step,
         `Category "${input.category}" was not offered by Facebook. Pick a category Facebook supports and retry.`,
+      );
+    }
+    await page.waitForTimeout(800);
+  }
+
+  step = 'fill-condition';
+  // Facebook requires a condition for "Item for sale". Pick the seller's value;
+  // never guess a different one, because it is a claim about the product.
+  const condition = await firstVisible(page, LISTING_FORM.condition, 3000);
+  if (condition) {
+    await condition.click();
+    const wanted = new RegExp(`^${input.condition.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i');
+    const option = page.getByRole(LISTING_FORM.optionRole, { name: wanted }).first();
+    if (await option.isVisible().catch(() => false)) {
+      await option.click();
+    } else {
+      throw await captureFailure(
+        page,
+        'UNEXPECTED_UI',
+        step,
+        `Condition "${input.condition}" was not offered by Facebook. Choose a condition Facebook supports and retry.`,
       );
     }
     await page.waitForTimeout(800);
@@ -177,4 +198,78 @@ export async function verifyListing(
     }
   }
   return findInYourListings(page, ref.title);
+}
+
+/**
+ * Marks a listing sold from "Your listings". Never reports success unless the
+ * row is re-read and actually shows as sold.
+ */
+export async function markListingSold(
+  page: Page,
+  ref: { externalId?: string | null; externalUrl?: string | null; title: string },
+): Promise<SoldResult> {
+  let step = 'open-your-listings';
+  await goto(page, URLS.yourListings, step);
+
+  step = 'find-listing-row';
+  const row = page
+    .locator(SELLING.listingLink)
+    .filter({ hasText: ref.title.slice(0, 40) })
+    .first();
+  if (!(await row.isVisible().catch(() => false))) {
+    throw await captureFailure(
+      page,
+      'SELECTOR_NOT_FOUND',
+      step,
+      `Could not find "${ref.title}" in Your listings, so it cannot be marked sold.`,
+    );
+  }
+
+  step = 'open-row-menu';
+  // The per-listing action menu lives a few levels up from the item link.
+  const rowScope = row.locator('xpath=ancestor::div[3]');
+  const menu =
+    (await firstVisibleIn(rowScope, SELLING.rowMenuButton, 3000)) ??
+    (await firstVisible(page, SELLING.rowMenuButton, 2000));
+  if (menu) {
+    await menu.click();
+    await page.waitForTimeout(800);
+  }
+
+  step = 'click-mark-as-sold';
+  const soldItem = await firstVisible(page, SELLING.markAsSoldItem, 5000);
+  if (!soldItem) {
+    throw await captureFailure(
+      page,
+      'SELECTOR_NOT_FOUND',
+      step,
+      'Could not find a "Mark as sold" action on the listing. Update SELLING in src/automation/facebook/selectors.ts.',
+    );
+  }
+  await soldItem.click();
+
+  step = 'confirm';
+  const confirm = await firstVisible(page, SELLING.confirmSold, 3000);
+  if (confirm) await confirm.click();
+  await page.waitForTimeout(2500);
+
+  step = 'verify-sold';
+  await goto(page, URLS.yourListings, step);
+  const updated = page
+    .locator(SELLING.listingLink)
+    .filter({ hasText: ref.title.slice(0, 40) })
+    .first();
+  if (!(await updated.isVisible().catch(() => false))) {
+    // Facebook moves sold items out of the active list - that counts as done.
+    return { ok: true, verified: true, detail: 'Listing no longer appears among active listings.' };
+  }
+  const rowText = (await updated.innerText().catch(() => '')) || '';
+  if (SELLING.soldProbe.test(rowText)) return { ok: true, verified: true };
+
+  throw await captureFailure(
+    page,
+    'SOLD_NOT_VERIFIED',
+    step,
+    'Clicked "Mark as sold" but the listing still shows as active. It may not have been marked.',
+  );
 }

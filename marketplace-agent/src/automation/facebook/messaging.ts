@@ -1,6 +1,8 @@
+import { createHash } from 'node:crypto';
 import type { Page } from 'playwright';
-import { INBOX, LISTING_PAGE, URLS } from './selectors';
+import { INBOX, LISTING_PAGE, SCROLL, URLS } from './selectors';
 import { firstVisible } from './locators';
+import { loadMoreDown, loadMoreUp } from './scrolling';
 import { captureFailure } from '../diagnostics';
 import { openInbox, openThread } from './navigation';
 import type { ConversationSnapshot, MessageSnapshot, SendResult } from '../MarketplaceAdapter';
@@ -12,7 +14,10 @@ export async function fetchConversations(page: Page): Promise<ConversationSnapsh
   await page.waitForTimeout(2000);
 
   const links = page.locator(INBOX.threadLink);
-  const count = Math.min(await links.count(), 40);
+  // The inbox is lazily loaded: page through it before reading.
+  await loadMoreDown(page, links);
+
+  const count = Math.min(await links.count(), SCROLL.maxConversations);
   const out: ConversationSnapshot[] = [];
   const seen = new Set<string>();
 
@@ -28,8 +33,8 @@ export async function fetchConversations(page: Page): Promise<ConversationSnapsh
     out.push({
       externalId: id,
       buyerName: lines[0] || 'Buyer',
-      // The inbox row shows the item title; the listing id is resolved when the
-      // thread itself is opened.
+      // Inbox rows rarely carry the listing id; getThreadListingId resolves it
+      // from inside the thread when the product cannot be matched by title.
       listingExternalId: null,
       listingTitle: lines[1] || null,
       lastMessagePreview: lines[2] || lines[1] || null,
@@ -42,46 +47,110 @@ export async function fetchConversations(page: Page): Promise<ConversationSnapsh
 /** Resolves which listing a thread is about, by the item link inside the thread. */
 export async function getThreadListingId(page: Page, threadId: string): Promise<string | null> {
   await openThread(page, threadId);
+  await page.waitForTimeout(1500);
   const link = page.locator(INBOX.threadListingLink).first();
   if (!(await link.isVisible().catch(() => false))) return null;
   const href = (await link.getAttribute('href')) || '';
   return href.match(LISTING_PAGE.itemUrlPattern)?.[1] ?? null;
 }
 
+interface RawRow {
+  label: string;
+  text: string;
+  /** Anything in the row that looks like a time, e.g. a <time> or title attr. */
+  timeHint: string;
+}
+
 export async function fetchMessages(page: Page, threadId: string): Promise<MessageSnapshot[]> {
   await openThread(page, threadId);
   await page.waitForTimeout(2000);
+
+  const rows = page.locator('[role="row"]');
+  // Older messages load when you scroll up.
+  await loadMoreUp(page, rows);
 
   /**
    * Facebook marks the seller's own messages with an aria-label / "You sent"
    * prefix. We read the accessible text of each row and infer the sender from
    * it, which survives class-name churn.
    */
-  const rows = await page.evaluate(() => {
+  const raw: RawRow[] = await page.evaluate(() => {
     const nodes = Array.from(document.querySelectorAll('[role="row"]'));
     return nodes
-      .map((n, idx) => {
-        const label = n.getAttribute('aria-label') || '';
-        const text = (n as HTMLElement).innerText || '';
-        return { idx, label, text: text.trim() };
+      .map((n) => {
+        const el = n as HTMLElement;
+        const timeEl = el.querySelector('time, [title], abbr');
+        return {
+          label: n.getAttribute('aria-label') || '',
+          text: (el.innerText || '').trim(),
+          timeHint:
+            timeEl?.getAttribute('datetime') ||
+            timeEl?.getAttribute('title') ||
+            (timeEl as HTMLElement | null)?.innerText ||
+            '',
+        };
       })
       .filter((r) => r.text.length > 0);
   });
 
+  const syncedAt = Date.now();
+  const occurrences = new Map<string, number>();
   const out: MessageSnapshot[] = [];
-  for (const row of rows) {
+
+  raw.forEach((row, index) => {
     const combined = `${row.label} ${row.text}`;
     const mine = /\byou sent\b/i.test(combined);
     const text = row.text.replace(/^You sent\s*/i, '').split('\n')[0].trim();
-    if (!text) continue;
+    if (!text) return;
+    const sender = mine ? 'AGENT' : 'BUYER';
+
+    /**
+     * Stable id: content-based, not positional. Loading older messages above
+     * used to shift every index and re-import the whole thread as new.
+     * The occurrence counter disambiguates a buyer genuinely repeating themselves.
+     */
+    const key = `${sender}|${text}`;
+    const nth = (occurrences.get(key) ?? 0) + 1;
+    occurrences.set(key, nth);
+    const hash = createHash('sha1').update(key).digest('hex').slice(0, 16);
+
     out.push({
-      externalId: `${threadId}:${row.idx}:${text.slice(0, 24)}`,
-      sender: mine ? 'AGENT' : 'BUYER',
+      externalId: `${hash}:${nth}`,
+      sender,
       text,
-      timestamp: new Date().toISOString(),
+      // Keep DOM order when Facebook gives us no parseable time, so messages
+      // do not scramble when several are imported in the same sync.
+      timestamp: parseTimestamp(row.timeHint) ?? new Date(syncedAt + index).toISOString(),
     });
-  }
+  });
+
   return out;
+}
+
+/** Best-effort: an ISO datetime attribute, or a time we can anchor to today. */
+function parseTimestamp(hint: string): string | null {
+  const trimmed = hint.trim();
+  if (!trimmed) return null;
+
+  const direct = Date.parse(trimmed);
+  if (!Number.isNaN(direct)) return new Date(direct).toISOString();
+
+  const clock = trimmed.match(/\b(\d{1,2}):(\d{2})\s*(AM|PM)?\b/i);
+  if (clock) {
+    let hours = Number(clock[1]);
+    const minutes = Number(clock[2]);
+    const meridiem = clock[3]?.toUpperCase();
+    if (meridiem === 'PM' && hours < 12) hours += 12;
+    if (meridiem === 'AM' && hours === 12) hours = 0;
+    if (hours < 24 && minutes < 60) {
+      const d = new Date();
+      d.setHours(hours, minutes, 0, 0);
+      // A time later than now must belong to yesterday.
+      if (d.getTime() > Date.now()) d.setDate(d.getDate() - 1);
+      return d.toISOString();
+    }
+  }
+  return null;
 }
 
 export async function sendMessage(page: Page, threadId: string, text: string): Promise<SendResult> {

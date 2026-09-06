@@ -86,7 +86,46 @@ function seed() {
   return { productId: product.id, conversationId: convo.id };
 }
 
+/** A second hot lead, created while the dashboard is already open. */
+function seedSecondHotLead() {
+  const product = repo.createProduct({
+    title: 'Road Bike',
+    description: 'Light aluminium frame.',
+    photos: [],
+    askingPrice: 350,
+    minimumPrice: 300,
+    pickupArea: 'East Austin, TX',
+    availability: 'weekends',
+    category: 'Sporting Goods',
+    condition: 'Used - good',
+  });
+  repo.setProductStatus(product.id, 'ACTIVE');
+  const convo = repo.upsertConversation({
+    platform: 'mock',
+    externalId: 'thread-notify',
+    buyerName: 'Diego',
+    productId: product.id,
+  });
+  repo.addMessage({ conversationId: convo.id, sender: 'BUYER', text: 'I can do $320 today.' });
+  repo.updateConversation(convo.id, {
+    status: 'HOT_LEAD',
+    leadScore: 90,
+    agreedPrice: 320,
+    aiEnabled: false,
+    humanTakeover: true,
+  });
+}
+
 async function main() {
+  // Start from a clean database: leftovers from a previous run made the
+  // "new hot lead notifies" check pass on stale data.
+  const dataDir = path.join(process.cwd(), 'data');
+  fs.mkdirSync(dataDir, { recursive: true });
+  for (const f of ['app.db', 'app.db-wal', 'app.db-shm']) {
+    const full = path.join(dataDir, f);
+    if (fs.existsSync(full)) fs.rmSync(full);
+  }
+
   const { productId, conversationId } = seed();
   const port = await pickFreePort(3200);
   const base = `http://localhost:${port}`;
@@ -153,6 +192,71 @@ async function main() {
     for (const field of ['photos', 'title', 'description', 'askingPrice', 'minimumPrice', 'pickupArea', 'availability']) {
       check(`add-product form has "${field}"`, (await page.locator(`[name="${field}"]`).count()) > 0);
     }
+
+    // Editing a product from the UI.
+    await page.goto(`${base}/products/${productId}`, { waitUntil: 'networkidle' });
+    await page.getByRole('button', { name: /^edit$/i }).click();
+    await page.waitForTimeout(400);
+    check('edit form opens with the current values', (await page.locator('[name="askingPrice"]').inputValue()) === '550');
+    await page.locator('[name="askingPrice"]').fill('575');
+    await page.locator('[name="pickupArea"]').fill('Central Austin, TX');
+    await page.getByRole('button', { name: /save changes/i }).click();
+    await page.waitForTimeout(1200);
+    const afterEdit = await (await fetch(`${base}/api/products/${productId}`)).json();
+    check('edits are persisted', afterEdit.product.askingPrice === 575 && afterEdit.product.pickupArea === 'Central Austin, TX', JSON.stringify(afterEdit.product.askingPrice));
+    const edited = await page.locator('body').innerText();
+    check(
+      'the UI warns that a published listing is not retroactively changed',
+      /live marketplace listing is unchanged/i.test(edited),
+      edited.slice(0, 200),
+    );
+
+    // Deleting is refused while the listing is still live.
+    const refused = await fetch(`${base}/api/products/${productId}`, { method: 'DELETE' });
+    check('deleting a published product is refused', refused.status === 409);
+    check('and it says why', /mark it sold/i.test((await refused.json()).error));
+
+    // A new hot lead must notify the human without them watching the tab.
+    const notified = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+    /**
+     * Headless Chromium denies notifications and real ones are not observable,
+     * so stand in a recorder and assert the app actually calls it.
+     * Passed as source text: a transpiled function would carry esbuild helpers
+     * that do not exist in the page, and the stub would silently not install.
+     */
+    await notified.addInitScript({
+      content: `(() => {
+        var captured = [];
+        window.__notifications = captured;
+        function Stub(title, options) {
+          captured.push(title + ' ' + ((options && options.body) || ''));
+        }
+        Stub.permission = 'granted';
+        Stub.requestPermission = function () { return Promise.resolve('granted'); };
+        Object.defineProperty(window, 'Notification', {
+          value: Stub, writable: true, configurable: true,
+        });
+      })();`,
+    });
+    await notified.goto(`${base}/`, { waitUntil: 'networkidle' });
+    await notified.waitForTimeout(3500); // let the first poll record what is already hot
+
+    const before = await notified.evaluate(() => (window as any).__notifications.length);
+    check('existing hot leads do not re-notify on load', before === 0, String(before));
+
+    seedSecondHotLead();
+    await notified.waitForTimeout(6000); // dashboard polls every 3s
+
+    const fired = await notified.evaluate(() => (window as any).__notifications as string[]);
+    check('a new hot lead fires a notification', fired.length === 1, JSON.stringify(fired));
+    check('the notification names the buyer and price', /Diego/.test(fired[0] || '') && /\$320/.test(fired[0] || ''), JSON.stringify(fired));
+    await notified.close();
+
+    // The opt-in lives in Settings.
+    await page.goto(`${base}/settings`, { waitUntil: 'networkidle' });
+    const settings = await page.locator('body').innerText();
+    check('settings explains notifications', /Notifications/.test(settings));
+    check('settings explains the dashboard token', /DASHBOARD_TOKEN/.test(settings));
 
     check('no console/page errors on any route', consoleErrors.length === 0, consoleErrors.join(' | ').slice(0, 300));
     console.log(`  screenshots in ${shotDir}`);

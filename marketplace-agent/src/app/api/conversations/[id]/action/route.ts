@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import * as repo from '@/db/repo';
+import { workerIsAlive } from '@/lib/agentState';
 
 export const dynamic = 'force-dynamic';
 
@@ -47,19 +48,41 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
 
     case 'markSold': {
       repo.updateConversation(id, { status: 'SOLD', aiEnabled: false });
+      let queued: string | null = null;
+      let note: string | null = null;
+
       if (convo.productId) {
         repo.setProductStatus(convo.productId, 'SOLD');
         for (const other of repo.listConversations().filter((c) => c.productId === convo.productId && c.id !== id)) {
           repo.updateConversation(other.id, { status: 'CLOSED', aiEnabled: false });
         }
+
+        // Also take the listing down on the marketplace, so it stops
+        // attracting new buyers - not just in this database.
+        const listing = repo.getListingForProduct(convo.productId);
+        if (listing?.externalId && listing.status === 'ACTIVE') {
+          if (workerIsAlive()) {
+            queued = repo.enqueueCommand('MARK_LISTING_SOLD', { productId: convo.productId }).id;
+          } else {
+            note =
+              'Marked sold here, but the marketplace listing is still live: start the agent (`npm run agent`) and mark it sold again to take it down.';
+            repo.logEvent({
+              type: 'SOLD_SKIPPED',
+              level: 'warn',
+              productId: convo.productId,
+              message: note,
+            });
+          }
+        }
       }
+
       repo.logEvent({
         type: 'MARKED_SOLD',
         conversationId: id,
         productId: convo.productId,
         message: `Marked sold to ${convo.buyerName}${convo.agreedPrice ? ` for $${convo.agreedPrice}` : ''}.`,
       });
-      return NextResponse.json({ conversation: repo.getConversation(id) });
+      return NextResponse.json({ conversation: repo.getConversation(id), queued, note });
     }
 
     case 'close': {

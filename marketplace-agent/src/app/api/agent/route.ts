@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import * as repo from '@/db/repo';
 import type { AgentCommandType } from '@/lib/types';
+import { workerIsAlive } from '@/lib/agentState';
 
 export const dynamic = 'force-dynamic';
 
@@ -25,12 +26,7 @@ export async function POST(req: Request) {
   const type = ACTIONS[action];
   if (!type) return NextResponse.json({ error: `Unknown action: ${action}` }, { status: 400 });
 
-  const state = repo.getAgentState();
-  const alive =
-    state.workerAlive &&
-    !!state.heartbeatAt &&
-    Date.now() - new Date(state.heartbeatAt).getTime() < 20000;
-  if (!alive) {
+  if (!workerIsAlive()) {
     return NextResponse.json(
       {
         error:

@@ -14,7 +14,11 @@ import { UPLOADS_DIR } from '@/db';
 import path from 'node:path';
 import fs from 'node:fs';
 import { createAdapter, currentMode } from '@/automation';
-import { AutomationError, type MarketplaceAdapter } from '@/automation/MarketplaceAdapter';
+import {
+  AutomationError,
+  type ConversationSnapshot,
+  type MarketplaceAdapter,
+} from '@/automation/MarketplaceAdapter';
 import { runMessageAgent } from '@/ai/messageAgent';
 import type { AgentCommand, Platform } from '@/lib/types';
 
@@ -134,6 +138,7 @@ export class AgentWorker {
         description: product.generatedDescription || product.description,
         price: product.askingPrice,
         category: product.category,
+        condition: product.condition,
         location: product.pickupArea,
         photoPaths,
       });
@@ -180,6 +185,70 @@ export class AgentWorker {
     });
   }
 
+  /**
+   * Takes the listing down on the platform itself. The local database is
+   * already marked sold by the dashboard; this makes it true on the
+   * marketplace too, so the item stops attracting new buyers.
+   */
+  async markListingSold(productId: string): Promise<void> {
+    const product = repo.getProduct(productId);
+    const listing = repo.getListingForProduct(productId, this.mode);
+    if (!product || !listing || !listing.externalId) {
+      repo.logEvent({
+        type: 'SOLD_SKIPPED',
+        level: 'warn',
+        productId,
+        message: 'Nothing published on the marketplace to mark sold.',
+      });
+      return;
+    }
+
+    const adapter = await this.readyAdapter();
+    if (!adapter) {
+      repo.logEvent({
+        type: 'SOLD_FAILED',
+        level: 'error',
+        productId,
+        message: `Could not mark "${product.title}" sold on the marketplace: ${repo.getAgentState().lastError}`,
+      });
+      return;
+    }
+
+    try {
+      const result = await adapter.markListingSold({
+        externalId: listing.externalId,
+        externalUrl: listing.externalUrl,
+        title: product.generatedTitle || product.title,
+      });
+      if (!result.ok || !result.verified) {
+        throw new Error(result.detail || 'The marketplace did not confirm the listing as sold.');
+      }
+      repo.updateListing(listing.id, { status: 'SOLD', errorMessage: null });
+      repo.noteActivity(`Marked "${product.title}" sold on the marketplace`);
+      repo.logEvent({
+        type: 'LISTING_MARKED_SOLD',
+        productId,
+        message: `${product.title} marked as sold on the marketplace.`,
+        meta: { detail: result.detail },
+      });
+    } catch (err) {
+      const auto = err instanceof AutomationError ? err : null;
+      const message = auto?.message || (err as Error).message;
+      repo.updateListing(listing.id, {
+        errorMessage: message,
+        screenshotPath: auto?.screenshotPath ?? null,
+        htmlPath: auto?.htmlPath ?? null,
+      });
+      repo.logEvent({
+        type: 'SOLD_FAILED',
+        level: 'error',
+        productId,
+        message: `Marked sold here, but the marketplace listing is still active: ${message}`,
+        meta: { step: auto?.step, screenshot: auto?.screenshotPath },
+      });
+    }
+  }
+
   /* ------------------------------------------------------------ messages */
 
   async checkMessages(): Promise<void> {
@@ -203,7 +272,7 @@ export class AgentWorker {
     }
 
     for (const snap of snapshots) {
-      const productId = this.resolveProductId(snap.listingExternalId, snap.listingTitle);
+      const productId = await this.resolveConversationProduct(adapter, snap);
       const convo = repo.upsertConversation({
         platform: this.mode,
         externalId: snap.externalId,
@@ -279,6 +348,42 @@ export class AgentWorker {
     }
   }
 
+  /**
+   * Attaches a thread to a product. Inbox rows often omit the listing id, so
+   * when the title does not match anything we open the thread and read the
+   * listing link from inside it.
+   */
+  private async resolveConversationProduct(
+    adapter: MarketplaceAdapter,
+    snap: ConversationSnapshot,
+  ): Promise<string | null> {
+    const direct = this.resolveProductId(snap.listingExternalId, snap.listingTitle);
+    if (direct) return direct;
+
+    const known = repo.findConversationByExternalId(this.mode, snap.externalId);
+    if (known?.productId) return known.productId;
+
+    try {
+      const listingId = await adapter.getConversationListingId(snap.externalId);
+      if (listingId) {
+        const resolved = this.resolveProductId(listingId, snap.listingTitle);
+        if (resolved) return resolved;
+        repo.logEvent({
+          type: 'CONVERSATION_UNLINKED',
+          level: 'warn',
+          message: `Thread with ${snap.buyerName} is about listing ${listingId}, which is not one of your products.`,
+        });
+      }
+    } catch (err) {
+      repo.logEvent({
+        type: 'CONVERSATION_UNLINKED',
+        level: 'warn',
+        message: `Could not work out which listing ${snap.buyerName} is asking about: ${(err as Error).message}`,
+      });
+    }
+    return null;
+  }
+
   private resolveProductId(listingExternalId: string | null, listingTitle: string | null): string | null {
     if (listingExternalId) {
       const listing = repo.findListingByExternalId(this.mode, listingExternalId);
@@ -337,6 +442,10 @@ export class AgentWorker {
       case 'CHECK_MESSAGES':
         await this.checkMessages();
         break;
+      case 'MARK_LISTING_SOLD': {
+        await this.markListingSold(String(cmd.payload.productId));
+        break;
+      }
       case 'OPEN_CONVERSATION': {
         const convo = repo.getConversation(String(cmd.payload.conversationId));
         if (!convo) throw new Error('Conversation not found.');

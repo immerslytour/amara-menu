@@ -16,6 +16,8 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
   const [warnings, setWarnings] = useState<string[]>([]);
   const [draftTitle, setDraftTitle] = useState('');
   const [draftDescription, setDraftDescription] = useState('');
+  const [editing, setEditing] = useState(false);
+  const [notes, setNotes] = useState<string[]>([]);
 
   const load = useCallback(async () => {
     const res = await fetch(`/api/products/${id}`, { cache: 'no-store' });
@@ -208,18 +210,172 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
       </Card>
 
       <Card>
-        <SectionTitle>SELLER DETAILS</SectionTitle>
-        <dl className="grid grid-cols-[140px_1fr] gap-y-1 text-sm">
-          <dt className="text-slate-500">Your description</dt>
-          <dd className="whitespace-pre-wrap text-slate-200">{product.description || '—'}</dd>
-          <dt className="text-slate-500">Pickup area</dt>
-          <dd className="text-slate-200">{product.pickupArea}</dd>
-          <dt className="text-slate-500">Availability</dt>
-          <dd className="text-slate-200">{product.availability || '—'}</dd>
-          <dt className="text-slate-500">Category</dt>
-          <dd className="text-slate-200">{product.category}</dd>
-        </dl>
+        <div className="mb-3 flex items-center justify-between">
+          <SectionTitle>SELLER DETAILS</SectionTitle>
+          <div className="flex gap-2">
+            <Button variant="ghost" onClick={() => setEditing((v) => !v)}>
+              {editing ? 'Cancel' : 'Edit'}
+            </Button>
+            <Button
+              variant="danger"
+              disabled={busy === 'delete'}
+              onClick={async () => {
+                if (!confirm(`Delete "${product!.title}"? This cannot be undone.`)) return;
+                setBusy('delete');
+                setError(null);
+                try {
+                  const res = await fetch(`/api/products/${id}`, { method: 'DELETE' });
+                  const json = await res.json();
+                  if (!res.ok) throw new Error(json.error || 'Could not delete.');
+                  window.location.href = '/products';
+                } catch (err) {
+                  setError((err as Error).message);
+                } finally {
+                  setBusy(null);
+                }
+              }}
+            >
+              Delete
+            </Button>
+          </div>
+        </div>
+
+        {notes.length > 0 && (
+          <ul className="mb-3 rounded border border-amber-800 bg-amber-900/20 px-3 py-2 text-xs text-amber-200">
+            {notes.map((n) => (
+              <li key={n}>{n}</li>
+            ))}
+          </ul>
+        )}
+
+        {editing ? (
+          <EditForm
+            product={product}
+            busy={busy === 'edit'}
+            onCancel={() => setEditing(false)}
+            onSave={async (patch) => {
+              setBusy('edit');
+              setError(null);
+              setNotes([]);
+              try {
+                const res = await fetch(`/api/products/${id}`, {
+                  method: 'PATCH',
+                  headers: { 'content-type': 'application/json' },
+                  body: JSON.stringify(patch),
+                });
+                const json = await res.json();
+                if (!res.ok) throw new Error((json.errors || [json.error]).join(' '));
+                setNotes(json.warnings || []);
+                setEditing(false);
+                await load();
+              } catch (err) {
+                setError((err as Error).message);
+              } finally {
+                setBusy(null);
+              }
+            }}
+          />
+        ) : (
+          <dl className="grid grid-cols-[140px_1fr] gap-y-1 text-sm">
+            <dt className="text-slate-500">Your description</dt>
+            <dd className="whitespace-pre-wrap text-slate-200">{product.description || '—'}</dd>
+            <dt className="text-slate-500">Asking / minimum</dt>
+            <dd className="text-slate-200">
+              ${product.askingPrice} / ${product.minimumPrice}
+            </dd>
+            <dt className="text-slate-500">Pickup area</dt>
+            <dd className="text-slate-200">{product.pickupArea}</dd>
+            <dt className="text-slate-500">Availability</dt>
+            <dd className="text-slate-200">{product.availability || '—'}</dd>
+            <dt className="text-slate-500">Category</dt>
+            <dd className="text-slate-200">{product.category}</dd>
+            <dt className="text-slate-500">Condition</dt>
+            <dd className="text-slate-200">{product.condition}</dd>
+          </dl>
+        )}
       </Card>
     </div>
+  );
+}
+
+const CATEGORIES = ['Electronics', 'Home Goods', 'Furniture', 'Clothing', 'Sporting Goods', 'Other'];
+const CONDITIONS = ['New', 'Used - like new', 'Used - good', 'Used - fair'];
+const editInput =
+  'w-full rounded border border-line bg-[#0f1115] px-3 py-2 text-sm text-white outline-none focus:border-blue-500';
+
+function EditForm({
+  product,
+  busy,
+  onSave,
+  onCancel,
+}: {
+  product: Product;
+  busy: boolean;
+  onSave: (patch: Record<string, unknown>) => void;
+  onCancel: () => void;
+}) {
+  return (
+    <form
+      className="space-y-3"
+      onSubmit={(e) => {
+        e.preventDefault();
+        const data = new FormData(e.currentTarget);
+        onSave(Object.fromEntries(data.entries()));
+      }}
+    >
+      <Labelled label="Title">
+        <input name="title" defaultValue={product.title} className={editInput} />
+      </Labelled>
+      <Labelled label="Description">
+        <textarea name="description" rows={4} defaultValue={product.description} className={editInput} />
+      </Labelled>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Labelled label="Asking price ($)">
+          <input name="askingPrice" type="number" min="1" defaultValue={product.askingPrice} className={editInput} />
+        </Labelled>
+        <Labelled label="Minimum price ($)">
+          <input name="minimumPrice" type="number" min="1" defaultValue={product.minimumPrice} className={editInput} />
+        </Labelled>
+      </div>
+      <Labelled label="Pickup area">
+        <input name="pickupArea" defaultValue={product.pickupArea} className={editInput} />
+      </Labelled>
+      <Labelled label="Availability">
+        <input name="availability" defaultValue={product.availability} className={editInput} />
+      </Labelled>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Labelled label="Category">
+          <select name="category" defaultValue={product.category} className={editInput}>
+            {CATEGORIES.map((c) => (
+              <option key={c}>{c}</option>
+            ))}
+          </select>
+        </Labelled>
+        <Labelled label="Condition">
+          <select name="condition" defaultValue={product.condition} className={editInput}>
+            {CONDITIONS.map((c) => (
+              <option key={c}>{c}</option>
+            ))}
+          </select>
+        </Labelled>
+      </div>
+      <div className="flex gap-2">
+        <Button type="submit" disabled={busy}>
+          {busy ? 'Saving…' : 'Save changes'}
+        </Button>
+        <Button variant="ghost" onClick={onCancel}>
+          Cancel
+        </Button>
+      </div>
+    </form>
+  );
+}
+
+function Labelled({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <label className="block">
+      <span className="mb-1 block text-xs font-semibold tracking-wide text-slate-400">{label}</span>
+      {children}
+    </label>
   );
 }

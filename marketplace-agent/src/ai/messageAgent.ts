@@ -89,6 +89,19 @@ export async function runMessageAgent(args: {
   const agreedPrice =
     outcome.agreedPrice ?? (readyToClose ? (convo.agreedPrice ?? null) : null);
 
+  /**
+   * Hand off BEFORE composing the reply, not after.
+   *
+   * Writing the message takes a couple of seconds; doing the handoff afterwards
+   * left a window where the dashboard already showed HOT_LEAD while the agreed
+   * price was still missing and the AI still looked switched on. If the send
+   * then fails, having already handed off is the safe failure: the human takes
+   * over rather than the agent carrying on alone.
+   */
+  if (readyToClose) {
+    tools.handoffToHuman(convo.id, { reason: classification.reason, agreedPrice });
+  }
+
   // --- wording -----------------------------------------------------------
   const reply = await draftReply({
     product,
@@ -125,10 +138,6 @@ function finish(args: {
   reply: string;
 }): MessageAgentResult {
   if (args.readyToClose) {
-    tools.handoffToHuman(args.convo.id, {
-      reason: args.classification.reason,
-      agreedPrice: args.agreedPrice,
-    });
     return {
       handled: true,
       status: 'HOT_LEAD',
@@ -146,8 +155,12 @@ function finish(args: {
   };
 }
 
+/** Any promise that a human will settle the pickup, however Claude worded it. */
+const PICKUP_HANDOFF_PROMISE =
+  /(confirm|sort out|arrange|work out|send)[^.!?]*\b(pickup|pick-up|meet|meeting|details|spot|location)\b|\bseller will\b/i;
+
 function handoffLine(base: string): string {
-  return base.includes('confirm the pickup details')
+  return PICKUP_HANDOFF_PROMISE.test(base)
     ? base
     : `${base} I'll have the seller confirm the pickup details with you.`;
 }

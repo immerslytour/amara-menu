@@ -11,6 +11,7 @@ import type {
   PublishResult,
   ReadyState,
   SendResult,
+  SoldResult,
 } from '../MarketplaceAdapter';
 import { AutomationError } from '../MarketplaceAdapter';
 import * as listing from './listing';
@@ -106,6 +107,14 @@ export class FacebookMarketplaceAdapter implements MarketplaceAdapter {
     return listing.verifyListing(this.requirePage(), ref);
   }
 
+  markListingSold(ref: {
+    externalId?: string | null;
+    externalUrl?: string | null;
+    title: string;
+  }): Promise<SoldResult> {
+    return listing.markListingSold(this.requirePage(), ref);
+  }
+
   fetchConversations(): Promise<ConversationSnapshot[]> {
     return messaging.fetchConversations(this.requirePage());
   }
@@ -125,7 +134,7 @@ export class FacebookMarketplaceAdapter implements MarketplaceAdapter {
   }
 
   /** Which listing a thread belongs to (used to attach conversations to products). */
-  getThreadListingId(threadId: string): Promise<string | null> {
-    return messaging.getThreadListingId(this.requirePage(), threadId);
+  getConversationListingId(conversationExternalId: string): Promise<string | null> {
+    return messaging.getThreadListingId(this.requirePage(), conversationExternalId);
   }
 }

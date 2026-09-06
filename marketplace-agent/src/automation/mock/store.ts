@@ -9,6 +9,7 @@ export interface MockListing {
   category: string;
   location: string;
   photos: string[];
+  sold: boolean;
   createdAt: string;
 }
 
@@ -33,6 +34,8 @@ export interface MockState {
   verificationRequired: boolean;
   /** Test hook: renders the marketplace without its "Create new listing" button. */
   breakCreateFlow: boolean;
+  /** Test hook: inbox rows omit the listing id, as Facebook's do. */
+  hideInboxListingId: boolean;
   listings: MockListing[];
   threads: MockThread[];
   seq: number;
@@ -47,6 +50,7 @@ function empty(): MockState {
     loggedIn: true,
     verificationRequired: false,
     breakCreateFlow: false,
+    hideInboxListingId: false,
     listings: [],
     threads: [],
     seq: 1,

@@ -8,6 +8,7 @@ import type {
   PublishResult,
   ReadyState,
   SendResult,
+  SoldResult,
 } from '../MarketplaceAdapter';
 import { captureFailure } from '../diagnostics';
 import type { Platform } from '@/lib/types';
@@ -236,6 +237,45 @@ export class MockMarketplaceAdapter implements MarketplaceAdapter {
       if (err?.name === 'AutomationError') throw err;
       throw await captureFailure(page, 'SELECTOR_NOT_FOUND', step, `Send failed at "${step}": ${err?.message}`);
     }
+  }
+
+  async markListingSold(ref: {
+    externalId?: string | null;
+    externalUrl?: string | null;
+    title: string;
+  }): Promise<SoldResult> {
+    const page = this.requirePage();
+    const url = ref.externalUrl || (ref.externalId ? `${base()}/marketplace/item/${ref.externalId}` : null);
+    if (!url) return { ok: false, verified: false, detail: 'No listing URL to mark sold.' };
+    let step = 'open-listing';
+    try {
+      await page.goto(url, { waitUntil: 'domcontentloaded' });
+      if ((await page.getByTestId('sold-banner').count()) > 0) {
+        return { ok: true, verified: true, detail: 'Listing was already marked sold.' };
+      }
+      step = 'click-mark-as-sold';
+      await page.getByRole('button', { name: /^mark as sold$/i }).click({ timeout: 10000 });
+
+      step = 'verify-sold';
+      await page.getByTestId('sold-banner').waitFor({ timeout: 10000 });
+      const state = await page.getByTestId('listing-detail').getAttribute('data-sold');
+      if (state !== '1') {
+        throw await captureFailure(page, 'SOLD_NOT_VERIFIED', step, 'Listing does not show as sold after clicking.');
+      }
+      return { ok: true, verified: true };
+    } catch (err: any) {
+      if (err?.name === 'AutomationError') throw err;
+      throw await captureFailure(page, 'SELECTOR_NOT_FOUND', step, `Mark-as-sold failed at "${step}": ${err?.message}`);
+    }
+  }
+
+  async getConversationListingId(conversationExternalId: string): Promise<string | null> {
+    const page = this.requirePage();
+    await page.goto(`${base()}/messages/t/${conversationExternalId}`, { waitUntil: 'domcontentloaded' });
+    const el = page.getByTestId('thread-listing').first();
+    if (!(await el.isVisible().catch(() => false))) return null;
+    const id = await el.getAttribute('data-listing-id');
+    return id || null;
   }
 
   async openConversation(conversationExternalId: string): Promise<void> {

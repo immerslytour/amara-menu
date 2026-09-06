@@ -184,19 +184,30 @@ export function createItemPage(): string {
 export function itemPage(l: MockListing): string {
   return layout(
     l.title,
-    `<main data-testid="listing-detail" data-listing-id="${l.id}">
-      <span class="pill">Listed</span>
+    `<main data-testid="listing-detail" data-listing-id="${l.id}" data-sold="${l.sold ? '1' : '0'}">
+      <span class="pill" data-testid="listing-state">${l.sold ? 'Sold' : 'Listed'}</span>
       <h1 data-testid="listing-title">${escape(l.title)}</h1>
       <p data-testid="listing-price">$${l.price}</p>
       <p>${escape(l.location)} · ${escape(l.category)}</p>
       <p data-testid="listing-photos">${l.photos.length} photos</p>
       <h2>Description</h2>
       <pre data-testid="listing-description" style="white-space:pre-wrap">${escape(l.description)}</pre>
+      ${
+        l.sold
+          ? '<p data-testid="sold-banner">This listing is marked as sold.</p>'
+          : `<div class="row"><button type="button" id="sold-btn">Mark as sold</button></div>
+      <script>
+        document.getElementById('sold-btn').addEventListener('click', async () => {
+          const res = await fetch('/mock/api/listings/${l.id}/sold', { method: 'POST' });
+          if (res.ok) location.reload(); else alert('Could not mark sold');
+        });
+      </script>`
+      }
     </main>`,
   );
 }
 
-export function inboxPage(threads: MockThread[]): string {
+export function inboxPage(threads: MockThread[], hideListingId = false): string {
   return layout(
     'Messages',
     `<main>
@@ -209,7 +220,7 @@ export function inboxPage(threads: MockThread[]): string {
                 (t) => `<li class="card" data-testid="thread-row" data-thread-id="${t.id}">
           <a href="/messages/t/${t.id}" data-testid="thread-link">
             <strong data-testid="thread-buyer">${escape(t.buyerName)}</strong></a>
-          <div data-testid="thread-listing" data-listing-id="${t.listingId ?? ''}">${escape(t.listingTitle || 'Unknown item')}</div>
+          <div data-testid="thread-listing"${hideListingId ? '' : ` data-listing-id="${t.listingId ?? ''}"`}>${escape(t.listingTitle || 'Unknown item')}</div>
           <div data-testid="thread-preview">${escape(t.messages[t.messages.length - 1]?.text || '')}</div>
           ${t.unread ? '<span class="pill" data-testid="thread-unread">Unread</span>' : ''}
         </li>`,

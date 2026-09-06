@@ -40,18 +40,26 @@ that appears, then press **Start Agent**.
 ### Verify it works
 
 ```bash
-npm test                        # price rules, Facebook challenge detection, failure recovery
-npm run build && npm run test:ui   # every page renders, no console errors
-npm run build && npm run e2e       # the whole MVP flow, in a real browser
+npm run build                      # the UI and e2e suites run against a production build
+npm test                           # rules, challenge detection, recovery, linking, dashboard lock
+npm run test:ui                    # every page renders, edits save, hot leads notify
+npm run e2e                        # the whole MVP flow, in a real browser
+npm run test:claude                # live Claude checks (skips itself without a key)
 ```
 
 | Suite | What it proves |
 |---|---|
-| `test:rules` | the minimum price can never be crossed; the guard blocks addresses, payment apps, phone numbers, shipping; lead bands and buyer classification |
+| `test:rules` | the minimum price can never be crossed (checked against every offer/anchor combination); the guard blocks addresses, payment apps, phone numbers, shipping; lead bands and buyer classification |
 | `test:facebook` | login pages, checkpoints, CAPTCHAs and 2FA prompts are recognised and *paused on*, never bypassed |
 | `test:recovery` | a broken marketplace UI produces a screenshot, an HTML snapshot, a FAILED status and a working retry — and publishes nothing |
-| `test:ui` | all eight pages render with no console or page errors |
-| `e2e` | product → Claude draft → approval → browser publish + verification → buyer messages → negotiation floor → HOT_LEAD handoff → AI stops → marked sold |
+| `test:linking` | a thread is attached to the right product even when two listings share a title and the inbox hides the listing id; re-syncing never duplicates messages; marking sold takes the listing down on the marketplace |
+| `test:auth` | with `DASHBOARD_TOKEN` set, no page or API call works without it |
+| `test:ui` | all pages render with no console errors, edits persist, deleting a live listing is refused, a new hot lead fires a notification |
+| `e2e` | product → Claude draft → approval → browser publish + verification → buyer messages → negotiation floor → HOT_LEAD handoff → AI stops → sold on the marketplace → edit and delete |
+| `test:claude` | with a real key: Claude's listing copy invents nothing, its classifications match the spec's examples, and every reply it writes passes the guard |
+
+CI runs all of this on every push (`.github/workflows/marketplace-agent.yml`). Add an
+`ANTHROPIC_API_KEY` repository secret to include the live Claude suite.
 
 ---
 
@@ -117,6 +125,9 @@ If Claude produces something that breaks a rule, it is discarded and a safe
 deterministic message is sent instead (and the block is written to the event log).
 
 - Never accepts or quotes a price below a product's minimum.
+- The model may raise its read of buyer intent but never lower a concrete
+  signal: a buyer who named a price is negotiating, and one who said they will
+  take it is a hot lead, whatever the model thinks.
 - Never gives out an exact street address — it promises a human will confirm
   pickup details, then flags the lead for you.
 - Never invents specifications, condition or history. Claude may only rephrase
@@ -131,6 +142,8 @@ deterministic message is sent instead (and the block is written to the event log
 ### Login and security challenges
 
 - You log into Facebook yourself, in the browser window the agent opens.
+- If you expose the dashboard beyond your own machine, set `DASHBOARD_TOKEN`:
+  the agent can message buyers as you, so the UI and API should not be open.
 - Your password is never requested, stored, or transmitted by this app.
 - The session lives on your machine in `data/browser-profile` (Playwright
   persistent context). Delete that folder to sign out.
@@ -168,7 +181,17 @@ With asking `$450` and minimum `$400`:
 Each round concedes about halfway toward the floor, then holds at the floor.
 Once the buyer agrees to anything at or above the minimum the conversation
 becomes `HOT_LEAD`, the AI switches itself off for that thread, and the dashboard
-shows **🔥 READY TO CLOSE** with `OPEN CHAT` / `TAKE OVER` / `MARK SOLD`.
+shows **🔥 READY TO CLOSE** with `OPEN CHAT` / `TAKE OVER` / `MARK SOLD`. The
+handoff is recorded *before* the closing message is written, so the dashboard is
+never briefly showing a hot lead with the AI still apparently in charge.
+
+If you allow notifications (Settings → Notifications), a new hot lead raises a
+desktop notification and a chime, so you do not have to be watching the tab.
+
+**MARK SOLD takes the listing down on the marketplace too**, not just in this
+database — the agent opens the listing and marks it sold, and only reports
+success once it re-reads it as sold. If the agent process is not running, the
+dashboard says so rather than pretending the listing is gone.
 
 Lead scores: `0-30` LOW_INTENT · `31-60` INTERESTED · `61-80` NEGOTIATING ·
 `81-100` HOT_LEAD.
@@ -196,6 +219,7 @@ the whole system offline.
 | `HEADLESS` | – | `1` forces headless, `0` forces headed. Facebook defaults to headed, mock to headless |
 | `POLL_INTERVAL_MS` | `15000` | how often the agent re-reads the inbox while running |
 | `MOCK_PORT` | `4010` | fake marketplace port |
+| `DASHBOARD_TOKEN` | – | if set, the dashboard and its API require this token (entered once at `/unlock`, or sent as `x-dashboard-token`) |
 
 Data (SQLite database, uploaded photos, browser profile, debug snapshots) all
 lives under `data/`, which is git-ignored.
@@ -212,3 +236,5 @@ lives under `data/`, which is git-ignored.
 | `npm run mock-server` | just the fake marketplace |
 | `npm run e2e` | the full MVP flow (needs `npm run build` first) |
 | `npm run db:reset` | wipe the local database |
+| `npm test` | the offline suites |
+| `npm run test:claude` | live Claude checks (needs a key) |

@@ -26,6 +26,7 @@ export interface Product {
   pickupArea: string;
   availability: string;
   category: string;
+  condition: string;
   status: ProductStatus;
   aiEnabled: boolean;
   generatedTitle: string | null;
@@ -120,7 +121,8 @@ export type AgentCommandType =
   | 'RETRY_LISTING'
   | 'CHECK_MESSAGES'
   | 'OPEN_CONVERSATION'
-  | 'SEND_MESSAGE';
+  | 'SEND_MESSAGE'
+  | 'MARK_LISTING_SOLD';
 
 export interface AgentCommand {
   id: string;

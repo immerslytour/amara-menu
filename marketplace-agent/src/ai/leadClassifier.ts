@@ -148,9 +148,33 @@ ${input.transcript}`,
   if (agreedOk) {
     return { score: Math.max(fromClaude.score, 90), status: 'HOT_LEAD', reason: fromClaude.reason || heuristic.reason, source: 'claude' };
   }
-  if (heuristic.status === 'HOT_LEAD' && fromClaude.status !== 'HOT_LEAD') {
-    // Never downgrade a clear ready-to-buy signal.
+
+  /**
+   * The model may upgrade intent, never downgrade a concrete buying signal.
+   * A buyer who named a price is negotiating even if the offer is insulting,
+   * and one who said they will take it is hot even if the model is cautious.
+   */
+  if (FLOOR_STATUSES.has(heuristic.status) && rank(fromClaude.status) < rank(heuristic.status)) {
     return heuristic;
   }
   return { score: fromClaude.score, status: fromClaude.status, reason: fromClaude.reason, source: 'claude' };
+}
+
+/** Statuses the heuristic derives from an unambiguous signal in the message. */
+const FLOOR_STATUSES = new Set<ConversationStatus>(['NEGOTIATING', 'HOT_LEAD']);
+
+const INTENT_ORDER: ConversationStatus[] = [
+  'CLOSED',
+  'SPAM',
+  'LOW_INTENT',
+  'NEW',
+  'QUESTION',
+  'INTERESTED',
+  'NEGOTIATING',
+  'HOT_LEAD',
+  'SOLD',
+];
+
+function rank(status: ConversationStatus): number {
+  return INTENT_ORDER.indexOf(status);
 }

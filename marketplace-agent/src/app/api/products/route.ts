@@ -20,6 +20,7 @@ export async function POST(req: Request) {
   const pickupArea = String(form.get('pickupArea') || '').trim();
   const availability = String(form.get('availability') || '').trim();
   const category = String(form.get('category') || 'Electronics');
+  const condition = String(form.get('condition') || 'Used - good');
 
   const errors: string[] = [];
   if (!title) errors.push('Title is required.');
@@ -50,6 +51,7 @@ export async function POST(req: Request) {
     pickupArea,
     availability,
     category,
+    condition,
   });
   repo.logEvent({
     type: 'PRODUCT_CREATED',

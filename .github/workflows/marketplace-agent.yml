@@ -1,0 +1,60 @@
+name: marketplace-agent
+
+on:
+  push:
+    paths: ['marketplace-agent/**', '.github/workflows/marketplace-agent.yml']
+  pull_request:
+    paths: ['marketplace-agent/**', '.github/workflows/marketplace-agent.yml']
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: marketplace-agent
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: marketplace-agent/package-lock.json
+
+      - run: npm ci
+
+      - name: Install Chromium for Playwright
+        run: npx playwright install --with-deps chromium
+
+      - run: npm run typecheck
+
+      - run: npm run build
+
+      # Price floor, safety guard, lead bands, Facebook challenge detection,
+      # failure recovery, conversation linking, mark-sold and the dashboard lock.
+      - run: npm test
+
+      - name: UI renders
+        run: npm run test:ui
+
+      - name: Full MVP flow
+        run: npm run e2e
+
+      # Only runs when a key is configured; skips itself otherwise.
+      - name: Live Claude checks
+        run: npm run test:claude
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      - name: Upload failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-snapshots
+          path: |
+            marketplace-agent/data/debug
+            marketplace-agent/data/ui-screenshots
+          if-no-files-found: ignore
