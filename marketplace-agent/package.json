@@ -1,0 +1,42 @@
+{
+  "name": "marketplace-sales-agent",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3000",
+    "agent": "tsx src/agent/worker.ts",
+    "mock-agent": "tsx src/agent/mockRun.ts",
+    "mock-server": "tsx src/automation/mock/server.ts",
+    "e2e": "tsx scripts/e2e-mvp.ts",
+    "typecheck": "tsc --noEmit",
+    "db:reset": "tsx scripts/reset-db.ts",
+    "simulate-buyer": "tsx scripts/simulate-buyer.ts",
+    "test": "npm run test:rules && npm run test:facebook && npm run test:recovery",
+    "test:rules": "tsx scripts/test-rules.ts",
+    "test:facebook": "tsx scripts/test-facebook-detection.ts",
+    "test:recovery": "tsx scripts/test-failure-recovery.ts",
+    "test:ui": "tsx scripts/test-ui.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.124.0",
+    "better-sqlite3": "^13.0.3",
+    "next": "^15.5.25",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "zod": "^4.5.4"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^9.6.0",
+    "@types/node": "^26.4.1",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "autoprefixer": "^10.5.5",
+    "playwright": "^1.56.0",
+    "postcss": "^8.5.28",
+    "tailwindcss": "^3.4.19",
+    "tsx": "^4.23.13",
+    "typescript": "^5.9.3"
+  }
+}
