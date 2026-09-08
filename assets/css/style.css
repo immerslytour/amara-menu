@@ -440,6 +440,11 @@ a { color: inherit; }
   font-family: var(--display); font-size: 1.12rem; font-weight: 500;
   color: var(--oro); font-variant-numeric: tabular-nums;
 }
+.item-unit {
+  font-family: var(--util); font-size: 0.62rem; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--hueso-d); margin-right: 0.5rem;
+  white-space: nowrap;
+}
 /* the leader dots — the printed menu's connective tissue, kept */
 .item-lead {
   grid-column: 1 / 2; align-self: baseline;

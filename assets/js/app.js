@@ -244,7 +244,7 @@ function itemEl(item, id) {
       ${tags.length ? `<span class="item-tags">${tags.join("")}</span>` : ""}
       <span class="item-lead"></span>
     </div>
-    <span class="item-price">${money(item.price)}</span>
+    ${item.unit ? `<span class="item-unit">${item.unit[LANG]}</span>` : ""}<span class="item-price">${money(item.price)}</span>
     <p class="item-desc">${item.desc ? item.desc[LANG] : ""}</p>
     ${addons ? `<p class="item-addons">${addons}</p>` : ""}
   `;
