@@ -676,41 +676,41 @@
             "en": "Tacos"
           },
           "note": {
-            "es": "3 por orden · no se combinan. Proteína a elegir, con col, aguacate, aioli de chipotle y salsa de mango.",
-            "en": "3 per order · no mix & match. A selection of protein, with coleslaw, avocado, chipotle aioli and mango sauce."
+            "es": "3 por orden · no se combinan.",
+            "en": "3 per order · no mix & match."
           },
           "items": [
             {
               "name": {
-                "es": "Arrachera del Rancho",
-                "en": "Arrachera del Rancho"
+                "es": "Tacos del Rancho",
+                "en": "Tacos del Rancho"
               },
-              "price": 20,
+              "price": 21,
               "desc": {
-                "es": "Res deshebrada al estilo del rancho.",
-                "en": "Braised beef, rancho style."
+                "es": "Res deshebrada y cocida a fuego lento, con queso fresco, cebolla y salsa ranchera.",
+                "en": "Slow-braised beef with queso fresco, onions, and salsa ranchera."
               }
             },
             {
               "name": {
-                "es": "Pescado",
-                "en": "Fish"
+                "es": "Tacos Baja de Pescado",
+                "en": "Baja Fish Tacos"
               },
-              "price": 19,
+              "price": 18,
               "desc": {
-                "es": "",
-                "en": ""
+                "es": "Pescado crujiente con col en escabeche, crema de chipotle, pico de gallo, salsa de mango y limón.",
+                "en": "Crispy fish with cabbage slaw, chipotle crema, pico de gallo, mango salsa and lime."
               }
             },
             {
               "name": {
-                "es": "Camarón",
-                "en": "Shrimp"
+                "es": "Tacos de Camarón al Chipotle",
+                "en": "Chipotle Shrimp Tacos"
               },
-              "price": 25,
+              "price": 24,
               "desc": {
-                "es": "",
-                "en": ""
+                "es": "Camarón salteado con aguacate, col, pico de gallo, salsa de mango y crema de chipotle.",
+                "en": "Sautéed shrimp with avocado, cabbage, pico de gallo, mango salsa and chipotle crema."
               }
             },
             {
@@ -729,11 +729,22 @@
                 "es": "Trompito Pastor",
                 "en": "Trompito Pastor"
               },
-              "price": 25,
+              "price": 24,
               "star": true,
               "desc": {
-                "es": "Cerdo marinado en achiote con piña asada, jalapeño, pico de gallo y salsa roja.",
-                "en": "Achiote-marinated pork with grilled pineapple, jalapeño, pico de gallo and salsa roja."
+                "es": "Al pastor marinado en achiote, piña asada, cebolla y cilantro — servido en broqueta deconstruida.",
+                "en": "Achiote-marinated pork, grilled pineapple, onions and cilantro — served off a deconstructed skewer."
+              }
+            },
+            {
+              "name": {
+                "es": "Arrachera Tacos",
+                "en": "Arrachera Tacos"
+              },
+              "price": 19,
+              "desc": {
+                "es": "Arrachera asada con cebolla, aguacate, cilantro, salsa de mango y salsa roja.",
+                "en": "Grilled skirt steak with onions, avocado, cilantro, mango salsa, and salsa roja."
               }
             }
           ]
@@ -777,6 +788,17 @@
               "desc": {
                 "es": "Arrachera a la parrilla con enchilada de queso, arroz, frijoles y cebolla asada.",
                 "en": "Grilled arrachera with cheese enchilada, rice, beans, and grilled onion."
+              }
+            },
+            {
+              "name": {
+                "es": "Costillar de Cordero Amara",
+                "en": "Amara's Rack of Lamb"
+              },
+              "price": 40,
+              "desc": {
+                "es": "Costillar de cordero a la parrilla con chimichurri de menta, puré de papa y mezcla de vegetales.",
+                "en": "Grilled lamb rack with mint chimichurri, mashed potatoes and veggie medley."
               }
             }
           ]
@@ -969,7 +991,7 @@
     {
       "img": "trompito",
       "itemId": "cena-tacos-4",
-      "price": 25,
+      "price": 24,
       "name": {
         "es": "Trompito Pastor",
         "en": "Trompito Pastor"
@@ -1008,14 +1030,14 @@
     {
       "img": "tacos-camaron",
       "itemId": "cena-tacos-2",
-      "price": 25,
+      "price": 24,
       "name": {
-        "es": "Tacos de Camarón",
-        "en": "Shrimp Tacos"
+        "es": "Tacos de Camarón al Chipotle",
+        "en": "Chipotle Shrimp Tacos"
       },
       "note": {
-        "es": "Tres tacos con col morada, aioli de chipotle y salsa de mango.",
-        "en": "Three tacos with red cabbage, chipotle aioli and mango sauce."
+        "es": "Camarón salteado con aguacate, col, pico de gallo, salsa de mango y crema de chipotle.",
+        "en": "Sautéed shrimp with avocado, cabbage, pico de gallo, mango salsa and chipotle crema."
       }
     }
   ]
