@@ -164,3 +164,9 @@ cambio — o peor, mezclan HTML nuevo con JavaScript viejo y algo deja de
 funcionar.
 
 Si cambias solo `menu.json` (precios, platillos), sube igual la versión.
+
+**Esto también aplica si reemplazas una foto sin cambiarle el nombre**
+(por ejemplo, regradas `trompito.jpg` y subes un archivo con el mismo
+nombre). Las imágenes ahora también llevan `?v=` — si no subes la
+versión, el navegador (y la red de GitHub) sigue sirviendo la foto vieja
+en caché aunque el archivo en el repo ya sea el nuevo.

@@ -86,7 +86,8 @@ function mountImage(el, key, alt = "") {
   el.decoding = "async";
   /* No hay foto todavía → se retira el marco completo, sin ícono roto. */
   el.addEventListener("error", () => el.closest(".section-figure")?.remove(), { once: true });
-  el.src = src;
+  const v = window.ASSET_V ? "?v=" + window.ASSET_V : "";
+  el.src = src + v;
 }
 
 /* ============================================================
