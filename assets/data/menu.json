@@ -421,6 +421,17 @@
                 "es": "Diezmillo de res, frijoles de la olla, tocino dorado, cebollitas cambray y chile caribe. Servida con queso fundido y guacamole.",
                 "en": "Beef chuck with pot beans, crisped bacon, spring onions, and chile caribe. Served with melted cheese and guacamole."
               }
+            },
+            {
+              "name": {
+                "es": "Aguachiles Verdes",
+                "en": "Aguachiles Verdes"
+              },
+              "price": 26,
+              "desc": {
+                "es": "",
+                "en": ""
+              }
             }
           ]
         },
