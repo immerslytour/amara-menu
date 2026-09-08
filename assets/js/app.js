@@ -17,7 +17,15 @@ const IMAGES = {
   "trompito":      "assets/img/trompito.jpg",
   "pina-mariscos": "assets/img/pina-mariscos.jpg",
   "chilaquiles":   "assets/img/chilaquiles.jpg",
-  "tacos-camaron": "assets/img/tacos-camaron.jpg"
+  "tacos-camaron": "assets/img/tacos-camaron.jpg",
+  "ribeye-parrilla":  "assets/img/ribeye-parrilla.jpg",
+  "coliflor":         "assets/img/coliflor.jpg",
+  "tacos-asada":      "assets/img/tacos-asada.jpg",
+  "tacos-rancho":     "assets/img/tacos-rancho.jpg",
+  "tacos-dorados":    "assets/img/tacos-dorados.jpg",
+  "guacamole-ribeye": "assets/img/guacamole-ribeye.jpg",
+  "ceviche-camaron":  "assets/img/ceviche-camaron.jpg",
+  "huevos-rancheros": "assets/img/huevos-rancheros.jpg"
 };
 
 const COPY = {

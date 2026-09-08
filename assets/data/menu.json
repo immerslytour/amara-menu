@@ -1021,8 +1021,8 @@
         "en": "Trompito Pastor"
       },
       "note": {
-        "es": "Cerdo al achiote, piña asada y cuatro salsas de la casa.",
-        "en": "Achiote pork, grilled pineapple, four house salsas."
+        "es": "Al pastor marinado en achiote, piña asada, cebolla y cilantro — servido en broqueta deconstruida.",
+        "en": "Achiote-marinated pork, grilled pineapple, onions and cilantro — served off a deconstructed skewer."
       }
     },
     {
@@ -1034,8 +1034,8 @@
         "en": "Piña de Mariscos Gratinada"
       },
       "note": {
-        "es": "Camarón, pulpo y tocino gratinados dentro de media piña asada.",
-        "en": "Shrimp, octopus and bacon gratinéed inside half a roasted pineapple."
+        "es": "Media piña asada rellena con camarón, pulpo, tocino y champiñones salteados en una salsa cremosa de tomate y chiles rostizados, gratinada con queso Oaxaca.",
+        "en": "Half a roasted pineapple filled with shrimp, octopus, bacon, and mushrooms in a creamy tomato and roasted-chile sauce, gratinéed with Oaxaca cheese."
       }
     },
     {
@@ -1043,12 +1043,12 @@
       "itemId": "brunch-principales-7",
       "price": 17,
       "name": {
-        "es": "Chilaquiles Rojos",
-        "en": "Chilaquiles Rojos"
+        "es": "Chilaquiles Rojos o Verdes",
+        "en": "Chilaquiles Rojos o Verdes"
       },
       "note": {
-        "es": "Salsa roja, dos huevos, crema, queso fresco y aguacate.",
-        "en": "Red salsa, two eggs, crema, queso fresco and avocado."
+        "es": "Totopos crujientes bañados en salsa roja o verde, con crema, queso fresco, cebolla y dos huevos.",
+        "en": "Crispy tortilla chips simmered in red or green salsa, topped with crema, queso fresco, onion, and two eggs."
       }
     },
     {
@@ -1062,6 +1062,110 @@
       "note": {
         "es": "Camarón salteado con aguacate, col, pico de gallo, salsa de mango y crema de chipotle.",
         "en": "Sautéed shrimp with avocado, cabbage, pico de gallo, mango salsa and chipotle crema."
+      }
+    },
+    {
+      "img": "ribeye-parrilla",
+      "itemId": "cena-parrilla-0",
+      "price": 33,
+      "name": {
+        "es": "Ribeye a la Parrilla",
+        "en": "Ribeye a la Parrilla"
+      },
+      "note": {
+        "es": "Ribeye a la parrilla terminado con mantequilla de ajo, servido con verduras asadas y tortillas.",
+        "en": "Grilled ribeye finished with garlic butter, served with grilled vegetables and tortillas."
+      }
+    },
+    {
+      "img": "coliflor",
+      "itemId": "cena-entradas-4",
+      "price": 15,
+      "name": {
+        "es": "Coliflor con Miel de Chipotle",
+        "en": "Chipotle Honey Cauliflower Bites"
+      },
+      "note": {
+        "es": "Coliflor frita y crujiente bañada en miel de chipotle, servida con crema de limón.",
+        "en": "Crispy fried cauliflower tossed in chipotle honey, served with lime crema."
+      }
+    },
+    {
+      "img": "tacos-asada",
+      "itemId": "cena-tacos-5",
+      "price": 19,
+      "name": {
+        "es": "Arrachera Tacos",
+        "en": "Arrachera Tacos"
+      },
+      "note": {
+        "es": "Arrachera asada con cebolla, aguacate, cilantro, salsa de mango y salsa roja.",
+        "en": "Grilled skirt steak with onions, avocado, cilantro, mango salsa, and salsa roja."
+      }
+    },
+    {
+      "img": "tacos-rancho",
+      "itemId": "cena-tacos-0",
+      "price": 21,
+      "name": {
+        "es": "Tacos del Rancho",
+        "en": "Tacos del Rancho"
+      },
+      "note": {
+        "es": "Res deshebrada y cocida a fuego lento, con queso fresco, cebolla y salsa ranchera.",
+        "en": "Slow-braised beef with queso fresco, onions, and salsa ranchera."
+      }
+    },
+    {
+      "img": "tacos-dorados",
+      "itemId": "cena-entradas-2",
+      "price": 15,
+      "name": {
+        "es": "Golden Tacos Dorados",
+        "en": "Golden Tacos Dorados"
+      },
+      "note": {
+        "es": "Tres tacos dorados de pollo deshebrado con salsa verde, crema, lechuga y queso fresco.",
+        "en": "Three crispy tacos with shredded chicken, topped with salsa verde, crema, lettuce, and queso fresco."
+      }
+    },
+    {
+      "img": "guacamole-ribeye",
+      "itemId": "cena-entradas-0",
+      "price": 29,
+      "name": {
+        "es": "Guacamole de Ribeye y Chicharrón",
+        "en": "Ribeye Chicharrón Guacamole"
+      },
+      "note": {
+        "es": "Aguacate machacado coronado con trozos crujientes de ribeye, cotija y limón, servido con totopos de maíz.",
+        "en": "Fresh smashed avocado topped with crispy ribeye bites, cotija, lime, and served with corn chips."
+      }
+    },
+    {
+      "img": "ceviche-camaron",
+      "itemId": "cena-entradas-5",
+      "price": 23,
+      "name": {
+        "es": "Ceviche de Camarón",
+        "en": "Ceviche de Camarón"
+      },
+      "note": {
+        "es": "Camarón fresco marinado en salsa negra y jugo de limón con jitomate, cebolla, cilantro, pepino y aguacate, servido con tostadas.",
+        "en": "Fresh shrimp marinated in salsa negra and lime juice with tomato, onion, cilantro, cucumber, and avocado, served with tostadas."
+      }
+    },
+    {
+      "img": "huevos-rancheros",
+      "itemId": "brunch-principales-1",
+      "price": 15,
+      "name": {
+        "es": "Huevos Rancheros Amara",
+        "en": "Huevos Rancheros Amara"
+      },
+      "note": {
+        "es": "Dos huevos sobre tortillas de maíz crujientes con salsa ranchera, queso fresco, aguacate y papas asadas.",
+        "en": "Two eggs over crispy corn tortillas with ranchera sauce, queso fresco, avocado, and roasted potatoes."
       }
     }
   ]
